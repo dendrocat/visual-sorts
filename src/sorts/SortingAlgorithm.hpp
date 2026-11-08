@@ -5,7 +5,7 @@
 
 class SortingAlgorithm {
   public:
-	virtual std::string_view name() = 0;
+	virtual const std::string_view name() = 0;
 
 	virtual void sort(std::shared_ptr<SyncingModel> model) = 0;
 

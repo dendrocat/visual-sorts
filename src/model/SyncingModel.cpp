@@ -16,11 +16,18 @@ void SyncingModel::swap(std::size_t i, std::size_t j) {
 	_model.swap(i, j);
 }
 
-void SyncingModel::lock() { _gate.lock(); }
-void SyncingModel::unlock() { _gate.unlock(); }
+bool SyncingModel::compare(const int& a, const int& b) {
+	_gate.check();
+	return _model.compare(a, b);
+}
 
 const VectorModel& SyncingModel::container() const noexcept { return _model; }
+
+void SyncingModel::clearMarkers() { _model.clearMarkers(); }
 
 void SyncingModel::setStopToken(std::stop_token stoken) noexcept {
 	_gate.setStopToken(stoken);
 }
+
+void SyncingModel::lock() { _gate.lock(); }
+void SyncingModel::unlock() { _gate.unlock(); }

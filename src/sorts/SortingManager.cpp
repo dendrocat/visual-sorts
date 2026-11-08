@@ -11,6 +11,8 @@ SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 	_shuffler = std::make_unique<Shuffler>();
 }
 
+bool SortingManager::isSorting() { return _isSorting; }
+
 void SortingManager::start() {
 	if (_thread) return;
 	_thread = std::make_unique<std::jthread>(
@@ -47,7 +49,9 @@ void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 void SortingManager::executeSorts() {
 	std::size_t idx = 0;
 	while (auto algo = AlgorithmFactory::instance().create(idx++)) {
+		_isSorting = false;
 		_shuffler->shuffle(_model);
+		_isSorting = true;
 		algo->sort(_model);
 	}
 }

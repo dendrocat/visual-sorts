@@ -12,17 +12,18 @@ class VectorVisualizer : public sf::Drawable {
 	sf::Transformable _transform;
 	sf::Vector2f      _size;
 
+	sf::Color getColor(std::size_t i);
+
 	virtual void onSetSize() = 0;
 	virtual void onDraw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
   public:
 	VectorVisualizer(const VectorModel& model);
 
+	void setSize(const sf::Vector2f& size);
 	void setPosition(const sf::Vector2f& position);
 
-	void setSize(const sf::Vector2f& size);
-
-	virtual void update() = 0;
+	virtual void update(bool isSorting) = 0;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 

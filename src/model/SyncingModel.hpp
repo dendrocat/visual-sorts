@@ -18,13 +18,16 @@ class SyncingModel final {
 
 	[[nodiscard]] int get(std::size_t i) const;
 
+	bool compare(const int& a, const int& b);
 	void set(std::size_t i, int value);
 	void swap(std::size_t i, std::size_t j);
 
-	void lock();
-	void unlock();
-
 	[[nodiscard]] const VectorModel& container() const noexcept;
 
+	void clearMarkers();
+
 	void setStopToken(std::stop_token stoken) noexcept;
+
+	void lock();
+	void unlock();
 };

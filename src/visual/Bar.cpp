@@ -2,9 +2,15 @@
 
 Bar::Bar(const VectorModel& model) : VectorVisualizer(model) {
 	_bars = std::vector<sf::RectangleShape>(_model.size(), sf::RectangleShape({10, 10}));
+	for (std::size_t i = 0; i < _bars.size(); ++i) {
+		auto& bar = _bars[i];
+		bar.setFillColor(getColor(i));
+		bar.setOutlineColor(sf::Color::Black);
+		bar.setOutlineThickness(1);
+	}
 
 	_rect.setFillColor(sf::Color::Transparent);
-	_rect.setOutlineColor(sf::Color::Magenta);
+	_rect.setOutlineColor(sf::Color::White);
 	_rect.setOutlineThickness(2);
 }
 
@@ -27,7 +33,7 @@ void Bar::onDraw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(_rect, states);
 }
 
-void Bar::update() {
+void Bar::update(bool _) {
 	const float width = _size.x / _model.size();
 	for (size_t i = 0; i < _bars.size(); ++i) {
 		auto& bar = _bars[_model.get(i)];

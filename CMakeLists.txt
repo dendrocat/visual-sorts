@@ -20,6 +20,7 @@ add_executable(main
 
     src/visual/VectorVisualizer.cpp
     src/visual/Bar.cpp
+	src/visual/Ellipse.cpp
 
 	src/sorts/SortingManager.cpp
 )

@@ -1,17 +1,33 @@
 #include "VectorModel.hpp"
 
+#include <algorithm>
 #include <numeric>
 
-VectorModel::VectorModel(std::size_t size) : _container(size) {
-	std::iota(_container.begin(), _container.end(), 0);
+VectorModel::VectorModel(std::size_t size)
+	: _container(size), _markers(size, false) {
+	std::ranges::iota(_container, 0);
 }
 
 std::size_t VectorModel::size() const noexcept { return _container.size(); }
 
 int VectorModel::get(std::size_t i) const { return _container[i]; }
 
-void VectorModel::set(std::size_t i, int value) { _container[i] = value; }
+bool VectorModel::compare(const int& a, const int& b) const noexcept {
+	return a < b;
+}
+
+void VectorModel::set(std::size_t i, int val) {
+	_markers[val] = true;
+	_container[i] = val;
+}
 
 void VectorModel::swap(std::size_t i, std::size_t j) {
+	_markers[i] = _markers[j] = true;
 	std::swap(_container[i], _container[j]);
+}
+
+bool VectorModel::markered(std::size_t i) const { return _markers[i]; }
+
+void VectorModel::clearMarkers() {
+	std::ranges::fill(_markers, false);
 }

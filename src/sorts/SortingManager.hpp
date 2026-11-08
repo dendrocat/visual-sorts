@@ -8,6 +8,7 @@
 
 class SortingManager final {
   private:
+	bool _isSorting = false;
 	std::unique_ptr<Shuffler>     _shuffler;
 	std::shared_ptr<SyncingModel> _model;
 
@@ -20,6 +21,8 @@ class SortingManager final {
 
   public:
 	SortingManager(std::shared_ptr<SyncingModel> model);
+
+	bool isSorting();
 
 	void start();
 	void stop();

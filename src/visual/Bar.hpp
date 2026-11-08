@@ -16,5 +16,5 @@ class Bar final : public VectorVisualizer {
   public:
 	Bar(const VectorModel& model);
 
-	void update() override;
+	void update(bool isSorting) override;
 };
