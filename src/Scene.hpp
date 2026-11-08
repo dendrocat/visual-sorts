@@ -10,22 +10,22 @@ class Scene final : public sf::Drawable {
   private:
 	static constexpr size_t _vectorSize = 100;
 
-	std::shared_ptr<SyncingModel> _model;
+	std::shared_ptr<SyncingModel>     _model;
 	std::unique_ptr<VectorVisualizer> _visual;
-	std::unique_ptr<SortingManager> _sorting;
+	std::unique_ptr<SortingManager>   _sorting;
 
   public:
 	Scene(sf::Vector2u windowSize);
 
-	Scene(const Scene &) = delete;
-	Scene &operator=(const Scene &) = delete;
-	Scene(Scene &&) = delete;
-	Scene &operator=(Scene &&) = delete;
+	Scene(const Scene&) = delete;
+	Scene& operator=(const Scene&) = delete;
+	Scene(Scene&&) = delete;
+	Scene& operator=(Scene&&) = delete;
 
 	void start();
 	void update();
 	void close();
 
   protected:
-	void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

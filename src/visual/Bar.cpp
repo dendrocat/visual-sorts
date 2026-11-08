@@ -1,8 +1,8 @@
 #include "Bar.hpp"
 
-Bar::Bar(const VectorModel &model) : VectorVisualizer(model) {
-	_bars = std::vector<sf::RectangleShape>(_model.size(),
-											sf::RectangleShape({10, 10}));
+Bar::Bar(const VectorModel& model) : VectorVisualizer(model) {
+	_bars = std::vector<sf::RectangleShape>(_model.size(), sf::RectangleShape({10, 10}));
+
 	_rect.setFillColor(sf::Color::Transparent);
 	_rect.setOutlineColor(sf::Color::Magenta);
 	_rect.setOutlineThickness(2);
@@ -22,16 +22,15 @@ void Bar::onSetSize() {
 		_bars[i].setPosition({i * width - _size.x / 2, _size.y / 2 - height});
 	}
 }
-void Bar::onDraw(sf::RenderTarget &target, sf::RenderStates states) const {
-	for (const auto &p : _bars)
-		target.draw(p, states);
+void Bar::onDraw(sf::RenderTarget& target, sf::RenderStates states) const {
+	for (const auto& p : _bars) target.draw(p, states);
 	target.draw(_rect, states);
 }
 
 void Bar::update() {
 	const float width = _size.x / _model.size();
 	for (size_t i = 0; i < _bars.size(); ++i) {
-		auto &bar = _bars[_model.get(i)];
+		auto& bar = _bars[_model.get(i)];
 
 		auto p = bar.getPosition();
 		p.x = i * width - _size.x / 2;

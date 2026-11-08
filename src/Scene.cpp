@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+
 #include "visual/Bar.hpp"
 
 Scene::Scene(sf::Vector2u windowSize)
@@ -6,8 +7,8 @@ Scene::Scene(sf::Vector2u windowSize)
 	_sorting = std::make_unique<SortingManager>(_model);
 
 	_visual = std::make_unique<Bar>(_model->container());
-	_visual->setSize({ windowSize.x * 0.90f, windowSize.y * 0.90f });
-	_visual->setPosition({ windowSize.x / 2.0f, windowSize.y / 2.0f });
+	_visual->setSize({windowSize.x * 0.90f, windowSize.y * 0.90f});
+	_visual->setPosition({windowSize.x / 2.0f, windowSize.y / 2.0f});
 }
 
 void Scene::start() { _sorting->start(); }
@@ -18,8 +19,8 @@ void Scene::update() {
 	_model->unlock();
 }
 
-void Scene::close() {_sorting->stop();}
+void Scene::close() { _sorting->stop(); }
 
-void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void Scene::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	_visual->draw(target, states);
 }

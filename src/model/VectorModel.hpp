@@ -9,8 +9,8 @@ class VectorModel final {
   public:
 	VectorModel(std::size_t size);
 
-	VectorModel(const VectorModel &) = delete;
-	VectorModel &operator=(const VectorModel &) = delete;
+	VectorModel(const VectorModel&) = delete;
+	VectorModel& operator=(const VectorModel&) = delete;
 
 	[[nodiscard]] std::size_t size() const noexcept;
 

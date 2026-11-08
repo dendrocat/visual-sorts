@@ -19,7 +19,7 @@ void SyncingModel::swap(std::size_t i, std::size_t j) {
 void SyncingModel::lock() { _gate.lock(); }
 void SyncingModel::unlock() { _gate.unlock(); }
 
-const VectorModel &SyncingModel::container() const noexcept { return _model; }
+const VectorModel& SyncingModel::container() const noexcept { return _model; }
 
 void SyncingModel::setStopToken(std::stop_token stoken) noexcept {
 	_gate.setStopToken(stoken);

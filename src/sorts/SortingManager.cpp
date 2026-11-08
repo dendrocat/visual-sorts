@@ -1,6 +1,6 @@
 #include "SortingManager.hpp"
-#include "exceptions/SortCanceled.hpp"
 #include "AlgorithmFactory.hpp"
+#include "exceptions/SortCanceled.hpp"
 
 #include <cassert>
 #include <functional>
@@ -12,15 +12,13 @@ SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 }
 
 void SortingManager::start() {
-	if (_thread) {
-		return;
-	}
+	if (_thread) return;
 	_thread = std::make_unique<std::jthread>(
 		std::bind_front(&SortingManager::tryExecuteSorts, this));
 }
+
 void SortingManager::stop() {
-	if (!_thread)
-		return;
+	if (!_thread) return;
 	_thread->request_stop();
 }
 
@@ -31,16 +29,17 @@ void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 		executeSorts();
 	}
 #ifndef NDEBUG
-	catch (const SortCanceled &e) {
+	catch (const SortCanceled& e) {
 		std::cerr << "\033[31m" << e.what() << "\033[0m\n";
 	}
 #else
-	catch (const SortCanceled &) {
+	catch (const SortCanceled&) {
 	}
 #endif
-	catch (const std::exception &e) {
+	catch (const std::exception& e) {
 		std::cerr << "Sort failed: " << e.what() << '\n';
-	} catch (...) {
+	}
+	catch (...) {
 		std::cerr << "Sort failed with unknknown exception\n";
 	}
 }

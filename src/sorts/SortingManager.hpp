@@ -8,8 +8,8 @@
 
 class SortingManager final {
   private:
+	std::unique_ptr<Shuffler>     _shuffler;
 	std::shared_ptr<SyncingModel> _model;
-	std::unique_ptr<Shuffler> _shuffler;
 
 	std::unique_ptr<std::jthread> _thread;
 
@@ -22,6 +22,5 @@ class SortingManager final {
 	SortingManager(std::shared_ptr<SyncingModel> model);
 
 	void start();
-
 	void stop();
 };

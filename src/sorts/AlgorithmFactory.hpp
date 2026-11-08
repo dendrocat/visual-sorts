@@ -14,22 +14,20 @@ class AlgorithmFactory {
 	AlgorithmFactory() {}
 
   public:
-	static AlgorithmFactory &instance() {
+	static AlgorithmFactory& instance() {
 		static AlgorithmFactory factory;
 		return factory;
 	}
 
-	void add_algorithm(Creator creator) {
-		_registry.push_back(std::move(creator));
-	}
+	void add_algorithm(Creator creator) { _registry.push_back(std::move(creator)); }
 
 	std::unique_ptr<SortingAlgorithm> create(std::size_t index) {
 		if (index >= _registry.size()) return nullptr;
 		return _registry[index]();
 	}
 
-	AlgorithmFactory(const AlgorithmFactory &) = delete;
-	AlgorithmFactory &operator=(const AlgorithmFactory &) = delete;
-	AlgorithmFactory(AlgorithmFactory &&) = delete;
-	AlgorithmFactory &operator=(AlgorithmFactory &&) = delete;
+	AlgorithmFactory(const AlgorithmFactory&) = delete;
+	AlgorithmFactory& operator=(const AlgorithmFactory&) = delete;
+	AlgorithmFactory(AlgorithmFactory&&) = delete;
+	AlgorithmFactory& operator=(AlgorithmFactory&&) = delete;
 };

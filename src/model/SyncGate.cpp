@@ -15,8 +15,7 @@ void SyncGate::check() {
 	{
 		std::unique_lock lk(_mutex);
 		_cv.wait(lk, [this] { return !_locked && _steps > 0; });
-		if (_stoken.stop_requested())
-			throw SortCanceled{};
+		if (_stoken.stop_requested()) throw SortCanceled{};
 	}
 	--_steps;
 }

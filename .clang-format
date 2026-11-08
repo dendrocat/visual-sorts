@@ -1,0 +1,38 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+ColumnLimit: 90
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForContinuationAndIndentation
+
+AlignArrayOfStructures: Left
+AlignEscapedNewlines: Left
+AlignConsecutiveDeclarations:
+    Enabled: true
+AlignConsecutiveShortCaseStatements:
+    Enabled: true
+
+AllowShortBlocksOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLoopsOnASingleLine: true
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterFunction: false
+    AfterClass: false
+    AfterStruct: false
+    AfterEnum: false
+    AfterNamespace: true
+    AfterControlStatement: Never
+    BeforeElse: true
+    BeforeCatch: true
+    SplitEmptyFunction: false
+
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+SortIncludes:
+    Enabled: true
+    IgnoreCase: true

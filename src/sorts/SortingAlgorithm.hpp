@@ -6,10 +6,11 @@
 class SortingAlgorithm {
   public:
 	virtual std::string_view name() = 0;
+
 	virtual void sort(std::shared_ptr<SyncingModel> model) = 0;
 
 	SortingAlgorithm() = default;
 	virtual ~SortingAlgorithm() = default;
-	SortingAlgorithm(const SortingAlgorithm &) = delete;
-	SortingAlgorithm &operator=(const SortingAlgorithm &) = delete;
+	SortingAlgorithm(const SortingAlgorithm&) = delete;
+	SortingAlgorithm& operator=(const SortingAlgorithm&) = delete;
 };

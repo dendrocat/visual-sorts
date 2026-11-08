@@ -6,19 +6,19 @@
 
 class SyncGate final {
   private:
-	std::mutex _mutex;
+	std::mutex              _mutex;
 	std::condition_variable _cv;
-	std::stop_token _stoken;
+	std::stop_token         _stoken;
 
 	const int _stepsBeforeWait = 1;
-	int _steps;
+	int       _steps;
 
 	bool _locked = false;
 
   public:
 	SyncGate();
-	SyncGate(const SyncGate &) = delete;
-	SyncGate &operator=(const SyncGate &) = delete;
+	SyncGate(const SyncGate&) = delete;
+	SyncGate& operator=(const SyncGate&) = delete;
 
 	void setStopToken(std::stop_token stoken) noexcept;
 
