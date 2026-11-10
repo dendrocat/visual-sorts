@@ -2,7 +2,8 @@
 
 Bar::Bar(const VectorModel& model) : VectorVisualizer(model) {
 	_bars = std::vector<sf::RectangleShape>(_model.size(), sf::RectangleShape({10, 10}));
-	for (std::size_t i = 0; i < _bars.size(); ++i) {
+	const int n = _model.size();
+	for (int i = 0; i < n; ++i) {
 		auto& bar = _bars[i];
 		bar.setFillColor(getColor(i));
 		bar.setOutlineColor(sf::Color::Black);
@@ -29,18 +30,19 @@ void Bar::onSetSize() {
 	}
 }
 void Bar::onDraw(sf::RenderTarget& target, sf::RenderStates states) const {
-	for (const auto& p : _bars) target.draw(p, states);
+	for (auto it = _bars.rbegin(); it != _bars.rend(); ++it) target.draw(*it, states);
 	target.draw(_rect, states);
 }
 
-void Bar::update(bool _) {
+void Bar::update() {
+	const int   n = _model.size();
 	const float width = _size.x / _model.size();
-	for (size_t i = 0; i < _bars.size(); ++i) {
+
+	for (int i = 0; i < n; ++i) {
+		if (!_model.markered(i)) continue;
 		auto& bar = _bars[_model.get(i)];
-
-		auto p = bar.getPosition();
+		auto  p = bar.getPosition();
 		p.x = i * width - _size.x / 2;
-
 		bar.setPosition(p);
 	}
 }
