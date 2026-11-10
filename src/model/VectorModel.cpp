@@ -17,7 +17,7 @@ bool VectorModel::compare(const int& a, const int& b) noexcept {
 }
 
 void VectorModel::set(std::size_t i, int val) {
-	_markers[val] = true;
+	_markers[i] = true;
 	_container[i] = val;
 	++_sets;
 }

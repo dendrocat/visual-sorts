@@ -9,7 +9,7 @@
 
 class Scene final : public sf::Drawable {
   private:
-	static constexpr size_t _vectorSize = 100;
+	static constexpr size_t _vectorSize = 300;
 
 	std::shared_ptr<SyncingModel>     _model;
 	std::unique_ptr<Statistics>       _stat;

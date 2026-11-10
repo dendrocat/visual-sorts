@@ -22,7 +22,7 @@ void Scene::update() {
 	_model->lock();
 	_stat->setSort(_sorting->algorithmName());
 	_stat->update();
-	_visual->update(_sorting->isSorting());
+	_visual->update();
 	_model->clearMarkers();
 	_model->unlock();
 }

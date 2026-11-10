@@ -6,9 +6,10 @@
 int main() {
 	registerAlgorithms();
 
-	const sf::VideoMode mode({2200, 1200});
+	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+	mode.size = mode.size / 100u * 80u;
 
-	sf::RenderWindow window(mode, "sfml", sf::Style::Default, sf::State::Windowed);
+	sf::RenderWindow window{mode, "sfml", sf::Style::Default, sf::State::Windowed};
 	window.setFramerateLimit(60);
 
 	Scene scene{mode.size};

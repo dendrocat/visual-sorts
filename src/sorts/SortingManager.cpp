@@ -12,6 +12,7 @@ SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 }
 
 bool SortingManager::isSorting() { return _isSorting; }
+
 const std::string SortingManager::algorithmName() { return _algorithmName; }
 
 void SortingManager::start() {
@@ -51,13 +52,21 @@ void SortingManager::executeSorts() {
 	std::size_t idx = 0;
 	while (auto algo = AlgorithmFactory::instance().create(idx++)) {
 		_isSorting = false;
+		_model->clearMarkers();
 		_model->resetMeasures();
+
 		_algorithmName = _shuffler->name();
 		_shuffler->sort(_model);
 
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+
 		_isSorting = true;
+		_model->clearMarkers();
 		_model->resetMeasures();
+
 		_algorithmName = algo->name();
 		algo->sort(_model);
+
+		std::this_thread::sleep_for(std::chrono::seconds(2));
 	}
 }

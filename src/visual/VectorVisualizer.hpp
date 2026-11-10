@@ -23,7 +23,7 @@ class VectorVisualizer : public sf::Drawable {
 	void setSize(const sf::Vector2f& size);
 	void setPosition(const sf::Vector2f& position);
 
-	virtual void update(bool isSorting) = 0;
+	virtual void update() = 0;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 

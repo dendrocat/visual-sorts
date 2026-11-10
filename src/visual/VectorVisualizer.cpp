@@ -4,7 +4,7 @@ VectorVisualizer::VectorVisualizer(const VectorModel& model) : _model(model) {}
 
 sf::Color VectorVisualizer::getColor(std::size_t i) {
     const sf::Color start = sf::Color::Blue;
-    const sf::Color mid   = sf::Color::Green;
+    const sf::Color mid   = sf::Color::Yellow;
     const sf::Color end   = sf::Color::Red;
 
     const std::size_t n = _model.size();
