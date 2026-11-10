@@ -4,7 +4,7 @@
 
 class SelectionSort final : public SortingAlgorithm {
   public:
-	const std::string_view name() override { return "Selection sort"; }
+	const std::string_view name() override { return "SelectionSort"; }
 
 	void sort(std::shared_ptr<SyncingModel> model) override {
 		for (std::size_t i = 0; i + 1 < model->size(); ++i) {

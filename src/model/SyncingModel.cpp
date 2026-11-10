@@ -24,6 +24,7 @@ bool SyncingModel::compare(const int& a, const int& b) {
 const VectorModel& SyncingModel::container() const noexcept { return _model; }
 
 void SyncingModel::clearMarkers() { _model.clearMarkers(); }
+void SyncingModel::resetMeasures() { _model.resetMeasures(); }
 
 void SyncingModel::setStopToken(std::stop_token stoken) noexcept {
 	_gate.setStopToken(stoken);

@@ -26,6 +26,8 @@ class SyncingModel final {
 
 	void clearMarkers();
 
+	void resetMeasures();
+
 	void setStopToken(std::stop_token stoken) noexcept;
 
 	void lock();

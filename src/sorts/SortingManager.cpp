@@ -1,6 +1,6 @@
 #include "SortingManager.hpp"
 #include "AlgorithmFactory.hpp"
-#include "exceptions/SortCanceled.hpp"
+#include "exceptions/SortCanceledException.hpp"
 
 #include <cassert>
 #include <functional>
@@ -12,6 +12,7 @@ SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 }
 
 bool SortingManager::isSorting() { return _isSorting; }
+const std::string SortingManager::algorithmName() { return _algorithmName; }
 
 void SortingManager::start() {
 	if (_thread) return;
@@ -31,11 +32,11 @@ void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 		executeSorts();
 	}
 #ifndef NDEBUG
-	catch (const SortCanceled& e) {
+	catch (const SortCanceledException& e) {
 		std::cerr << "\033[31m" << e.what() << "\033[0m\n";
 	}
 #else
-	catch (const SortCanceled&) {
+	catch (const SortCanceledException&) {
 	}
 #endif
 	catch (const std::exception& e) {
@@ -50,8 +51,13 @@ void SortingManager::executeSorts() {
 	std::size_t idx = 0;
 	while (auto algo = AlgorithmFactory::instance().create(idx++)) {
 		_isSorting = false;
-		_shuffler->shuffle(_model);
+		_model->resetMeasures();
+		_algorithmName = _shuffler->name();
+		_shuffler->sort(_model);
+
 		_isSorting = true;
+		_model->resetMeasures();
+		_algorithmName = algo->name();
 		algo->sort(_model);
 	}
 }

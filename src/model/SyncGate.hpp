@@ -7,7 +7,7 @@
 class SyncGate final {
   private:
 	std::mutex              _mutex;
-	std::condition_variable _cv;
+	std::condition_variable_any _cv;
 	std::stop_token         _stoken;
 
 	const int _stepsBeforeWait = 1;

@@ -36,7 +36,7 @@ class MergeSort final : public SortingAlgorithm {
 	}
 
   public:
-	const std::string_view name() override { return "Merge sort"; }
+	const std::string_view name() override { return "MergeSort"; }
 
 	void sort(std::shared_ptr<SyncingModel> model) override {
 		_model = model;

@@ -6,6 +6,7 @@ class VectorModel final {
   private:
 	std::vector<int>  _container;
 	std::vector<bool> _markers;
+	int               _compares, _sets, _swaps;
 
   public:
 	VectorModel(std::size_t size);
@@ -17,9 +18,15 @@ class VectorModel final {
 
 	[[nodiscard]] int get(std::size_t i) const;
 
-	bool compare(const int& a, const int& b) const noexcept;
+	bool compare(const int& a, const int& b) noexcept;
 	void set(std::size_t i, int val);
 	void swap(std::size_t i, std::size_t j);
+
+	[[nodiscard]] int compares() const;
+	[[nodiscard]] int sets() const;
+	[[nodiscard]] int swaps() const;
+
+	void resetMeasures();
 
 	[[nodiscard]] bool markered(std::size_t i) const;
 

@@ -4,7 +4,7 @@
 
 class BubbleSort final : public SortingAlgorithm {
   public:
-	const std::string_view name() override { return "Bubble sort"; }
+	const std::string_view name() override { return "BubbleSort"; }
 
 	void sort(std::shared_ptr<SyncingModel> model) override {
 		for (std::size_t i = model->size(); i >= 1; --i) {

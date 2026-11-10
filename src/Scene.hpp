@@ -2,6 +2,7 @@
 
 #include "model/SyncingModel.hpp"
 #include "sorts/SortingManager.hpp"
+#include "Statistics.hpp"
 #include "visual/VectorVisualizer.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
@@ -11,6 +12,7 @@ class Scene final : public sf::Drawable {
 	static constexpr size_t _vectorSize = 100;
 
 	std::shared_ptr<SyncingModel>     _model;
+	std::unique_ptr<Statistics>       _stat;
 	std::unique_ptr<VectorVisualizer> _visual;
 	std::unique_ptr<SortingManager>   _sorting;
 

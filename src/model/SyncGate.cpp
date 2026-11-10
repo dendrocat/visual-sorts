@@ -1,5 +1,5 @@
 #include "SyncGate.hpp"
-#include "exceptions/SortCanceled.hpp"
+#include "exceptions/SortCanceledException.hpp"
 
 SyncGate::SyncGate() : _steps(_stepsBeforeWait) {}
 
@@ -12,11 +12,9 @@ void SyncGate::setStopToken(std::stop_token stoken) noexcept {
 }
 
 void SyncGate::check() {
-	{
-		std::unique_lock lk(_mutex);
-		_cv.wait(lk, [this] { return !_locked && _steps > 0; });
-		if (_stoken.stop_requested()) throw SortCanceled{};
-	}
+	std::unique_lock lk(_mutex);
+	_cv.wait(lk, _stoken, [this] { return !_locked && _steps > 0; });
+	if (_stoken.stop_requested()) throw SortCanceledException{};
 	--_steps;
 }
 
