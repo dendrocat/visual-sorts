@@ -1,5 +1,5 @@
 #include "model/SyncingModel.hpp"
-#include "sorts/MergeSort.hpp"
+#include "sorts/QuickSortDualPivot.hpp"
 #include "sorts/Shuffler.hpp"
 
 #include <atomic>
@@ -11,7 +11,7 @@
 
 namespace test
 {
-using Sorter = MergeSort;
+using Sorter = QuickSortDualPivot;
 
 void driveWithoutVisuals(SyncingModel& model, const std::function<void()>& action) {
 	std::atomic<bool>  done{false};
@@ -28,7 +28,7 @@ void driveWithoutVisuals(SyncingModel& model, const std::function<void()>& actio
 	});
 
 	while (!done.load(std::memory_order_acquire)) {
-		model.gate().unlock();
+		model.unlock();
 		std::this_thread::yield();
 	}
 
@@ -49,7 +49,7 @@ bool runCase(std::size_t size, const std::string_view& desc) {
 	Sorter   sorter;
 
 	driveWithoutVisuals(*model, [&] {
-		s.shuffle(model);
+		s.sort(model);
 		sorter.sort(model);
 	});
 
@@ -71,7 +71,10 @@ int main() {
 
 	for (const auto size : {2, 4, 5, 6, 10, 512, 1000}) {
 		std::string desc = std::to_string(size) + " elements";
-		failures += !test::runCase(size, desc);
+		if (!test::runCase(size, desc)) {
+			++failures;
+			break;
+		}
 	}
 
 	std::string name;

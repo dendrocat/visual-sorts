@@ -10,7 +10,7 @@ class SyncGate final {
 	std::condition_variable_any _cv;
 	std::stop_token         _stoken;
 
-	const int _stepsBeforeWait = 1;
+	const int _stepsBeforeWait = 5;
 	int       _steps;
 
 	bool _locked = false;
