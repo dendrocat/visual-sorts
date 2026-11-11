@@ -10,9 +10,9 @@ UseTab: ForContinuationAndIndentation
 AlignArrayOfStructures: Left
 AlignEscapedNewlines: Left
 AlignConsecutiveDeclarations:
-    Enabled: true
+  Enabled: true
 AlignConsecutiveShortCaseStatements:
-    Enabled: true
+  Enabled: true
 
 AlwaysBreakTemplateDeclarations: true
 AllowShortBlocksOnASingleLine: Empty
@@ -21,19 +21,21 @@ AllowShortLoopsOnASingleLine: true
 
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterFunction: false
-    AfterClass: false
-    AfterStruct: false
-    AfterEnum: false
-    AfterNamespace: true
-    AfterControlStatement: Never
-    BeforeElse: true
-    BeforeCatch: true
-    SplitEmptyFunction: false
+  AfterFunction: false
+  AfterClass: false
+  AfterStruct: false
+  AfterEnum: false
+  AfterNamespace: true
+  AfterControlStatement: Never
+  BeforeElse: true
+  BeforeCatch: true
+  SplitEmptyFunction: false
 
 PointerAlignment: Left
 ReferenceAlignment: Left
 
 SortIncludes:
-    Enabled: true
-    IgnoreCase: true
+  Enabled: true
+  IgnoreCase: false
+
+SpaceInEmptyBlock: true

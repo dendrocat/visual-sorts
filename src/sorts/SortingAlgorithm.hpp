@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/SyncingModel.hpp"
+
 #include <string_view>
 
 class SortingAlgorithm {

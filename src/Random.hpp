@@ -8,7 +8,7 @@ class Random {
 	std::mt19937 rng;
 
   public:
-	Random() : rng(std::random_device{}()) {}
+	Random() : rng(std::random_device{}()) { }
 
 	template <std::integral IntType = int>
 	IntType get(IntType l, IntType r) {

@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Random.hpp"
+#include "model/SyncingModel.hpp"
 #include "sorts/SortingAlgorithm.hpp"
-#include <model/SyncingModel.hpp>
-#include <Random.hpp>
 
 class Shuffler final : SortingAlgorithm {
   public:

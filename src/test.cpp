@@ -43,7 +43,7 @@ bool isSorted(const VectorModel& model) {
 }
 
 bool runCase(std::size_t size, const std::string_view& desc) {
-	auto model = std::make_shared<SyncingModel>(size);
+	auto model = std::make_shared<SyncingModel>(size, 1);
 
 	Shuffler s;
 	Sorter   sorter;
@@ -64,7 +64,7 @@ bool runCase(std::size_t size, const std::string_view& desc) {
 	return false;
 }
 
-} // namespace tmp
+} // namespace test
 
 int main() {
 	int failures = 0;
@@ -83,7 +83,7 @@ int main() {
 		name = s.name();
 	}
 	if (failures == 0) {
-		std::cout << name <<  ": All tests passed\n";
+		std::cout << name << ": All tests passed\n";
 		return 0;
 	}
 

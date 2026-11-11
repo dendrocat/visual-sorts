@@ -1,7 +1,7 @@
 #include "SyncGate.hpp"
 #include "exceptions/SortCanceledException.hpp"
 
-SyncGate::SyncGate() : _steps(_stepsBeforeWait) {}
+SyncGate::SyncGate(std::size_t maxSteps) : _maxSteps(maxSteps), _steps(maxSteps) { }
 
 void SyncGate::setStopToken(std::stop_token stoken) noexcept {
 	{
@@ -22,7 +22,7 @@ void SyncGate::unlock() noexcept {
 	{
 		std::lock_guard lk(_mutex);
 		_locked = false;
-		_steps = _stepsBeforeWait;
+		_steps = _maxSteps;
 	}
 	_cv.notify_all();
 }

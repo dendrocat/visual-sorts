@@ -1,6 +1,6 @@
 #include "Ellipse.hpp"
+
 #include "Random.hpp"
-#include <iostream>
 
 Ellipse::Ellipse(const VectorModel& model)
 	: VectorVisualizer(model), _points(model.size()) {

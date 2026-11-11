@@ -1,7 +1,6 @@
 #pragma once
 
 #include "sorts/SortingAlgorithm.hpp"
-#include <memory>
 
 class QuickSortHoare final : public SortingAlgorithm {
 	std::shared_ptr<SyncingModel> _model;

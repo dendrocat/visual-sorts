@@ -1,14 +1,15 @@
 #pragma once
 
 #include "sorts/SortingAlgorithm.hpp"
+
 #include <memory>
 
 class QuickSortDualPivot final : public SortingAlgorithm {
 	std::shared_ptr<SyncingModel> _model;
 
 	std::pair<int, int> partition(const int l, const int r) {
-		if (_model->compare(_model->get(r), _model->get(l)))
-			_model->swap(l, r);
+		if (_model->compare(_model->get(r), _model->get(l))) _model->swap(l, r);
+
 		auto less_pivot1 = l + 1, greater_pivot2 = r - 1;
 		auto i = less_pivot1;
 		auto p1 = _model->get(l), p2 = _model->get(r);

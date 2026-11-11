@@ -1,7 +1,7 @@
 #pragma once
 
-#include "model/SyncingModel.hpp"
 #include "Shuffler.hpp"
+#include "model/SyncingModel.hpp"
 
 #include <memory>
 #include <thread>
@@ -24,7 +24,7 @@ class SortingManager final {
   public:
 	SortingManager(std::shared_ptr<SyncingModel> model);
 
-	bool isSorting();
+	bool              isSorting();
 	const std::string algorithmName();
 
 	void start();

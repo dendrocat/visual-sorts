@@ -17,13 +17,14 @@ class Statistics final : public sf::Drawable {
 	std::vector<std::string> lines;
 
   public:
-	Statistics(const VectorModel& model, const std::string& font)
-		: _model(model), _text(_font) {
-		if (!_font.openFromFile(font)) throw FontNotFoundException{font};
+	Statistics(const VectorModel& model) : _model(model), _text(_font) {
 
 		_text.setFillColor(sf::Color::White);
 		lines.resize(5);
 		lines[1] = "Vector size: " + std::to_string(_model.size());
+	}
+	void setFont(const std::string& font) {
+		if (!_font.openFromFile(font)) throw FontNotFoundException{font};
 	}
 	void setSort(const std::string sort) { lines[0] = std::move(sort); }
 	void setSize(const unsigned int size) { _text.setCharacterSize(size); }

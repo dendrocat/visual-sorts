@@ -5,11 +5,11 @@
 
 class SyncingModel final {
   private:
-	SyncGate    _gate;
 	VectorModel _model;
+	SyncGate    _gate;
 
   public:
-	SyncingModel(std::size_t size);
+	SyncingModel(const std::size_t size, const std::size_t gateSteps);
 
 	SyncingModel(const VectorModel&) = delete;
 	SyncingModel& operator=(const VectorModel&) = delete;

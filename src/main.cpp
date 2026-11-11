@@ -1,5 +1,5 @@
-#include "registery.hpp"
 #include "Scene.hpp"
+#include "registery.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -12,7 +12,13 @@ int main() {
 	sf::RenderWindow window{mode, "sfml", sf::Style::Default, sf::State::Windowed};
 	window.setFramerateLimit(60);
 
-	Scene scene{mode.size};
+	constexpr std::size_t vectorSize = 1000;
+	constexpr std::size_t gateSteps = 5;
+	constexpr const char* font =
+		"/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
+	Scene scene{vectorSize, gateSteps};
+	scene.setSize(mode.size);
+	scene.setFont(font);
 	scene.start();
 
 	while (window.isOpen()) {

@@ -2,15 +2,15 @@
 
 #include "Random.hpp"
 #include "sorts/SortingAlgorithm.hpp"
-#include <memory>
 
 class QuickSortRandom final : public SortingAlgorithm {
 	Random random;
+
 	std::shared_ptr<SyncingModel> _model;
 
 	int partition(const int l, const int r) {
 		auto pivot = _model->get(random.get(l, r));
-		int i = l, j = r;
+		int  i = l, j = r;
 		while (1) {
 			while (i <= r && _model->compare(_model->get(i), pivot)) ++i;
 			while (j >= l && _model->compare(pivot, _model->get(j))) --j;

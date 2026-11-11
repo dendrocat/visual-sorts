@@ -1,3 +1,5 @@
+#pragma once
+
 #include "sorts/SortingAlgorithm.hpp"
 
 class MergeSort final : public SortingAlgorithm {

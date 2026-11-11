@@ -11,7 +11,7 @@ class AlgorithmFactory {
 	using Creator = std::function<std::unique_ptr<SortingAlgorithm>()>;
 	std::vector<Creator> _registry;
 
-	AlgorithmFactory() {}
+	AlgorithmFactory() { }
 
   public:
 	static AlgorithmFactory& instance() {

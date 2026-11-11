@@ -1,9 +1,13 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System/Vector2.hpp>
+#include "model/VectorModel.hpp"
 
-#include "../model/VectorModel.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+#include <SFML/System/Vector2.hpp>
 
 class VectorVisualizer : public sf::Drawable {
   protected:

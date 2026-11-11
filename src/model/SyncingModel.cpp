@@ -1,6 +1,7 @@
 #include "SyncingModel.hpp"
 
-SyncingModel::SyncingModel(std::size_t size) : _model(size) {}
+SyncingModel::SyncingModel(const std::size_t size, const std::size_t gateSteps)
+	: _model(size), _gate(gateSteps) { }
 
 std::size_t SyncingModel::size() const noexcept { return _model.size(); }
 
