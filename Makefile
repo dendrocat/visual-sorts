@@ -1,34 +1,39 @@
-DIR        = src
-BUILD_DIR  = build
-SOURCES    = $(DIR)/test.cpp \
-             $(DIR)/model/VectorModel.cpp \
-             $(DIR)/model/SyncGate.cpp \
-             $(DIR)/model/SyncingModel.cpp
+.PHONY: debug release test clean
+.DEFAULT_GOAL := help
 
-CXX        = g++
-CXXFLAGS   = -std=c++23 -pedantic-errors -Werror -Wall -Wextra -pthread -I$(DIR)
+CONFIGURE = cmake -S . -B build/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
+BUILD_DIR = build
+DEBUG_DIR = debug
+RELEASE_DIR = debug
 
-TARGET  = $(BUILD_DIR)/test
-MKDIR   = mkdir -p "$(BUILD_DIR)"
-RM      = rm -f
-RUN     = ./$(TARGET)
-CLEAN 	= rm -f $(TARGET)
+BUILD_DEBUG = $(BUILD_DIR)/$(DEBUG_DIR)
+BUILD_RELEASE = $(BUILD_DIR)/$(RELEASE_DIR)
 
-all: run
-clean_build: clean run
+help:
+	@echo "usage: make <target>"
+	@echo ""
+	@echo "  debug     build & run (Debug)"
+	@echo "  release   build & run (Release)"
+	@echo "  test      build & run tests"
+	@echo "  clean     remove build/"
 
-build: $(TARGET)
+debug:
+	$(CONFIGURE)
+	cmake --build $(BUILD_DEBUG) --target main
+	@ln -sf $(DEBUG_DIR)/compile_commands.json $(BUILD_DIR)/compile_commands.json
+	./$(BUILD_DEBUG)/main
 
-$(TARGET): $(SOURCES)
-	$(MKDIR)
-	$(CXX) $(CXXFLAGS) -o $@ $(SOURCES)
+release:
+	cmake -S . -B $(BUILD_RELEASE) -G Ninja -DCMAKE_BUILD_TYPE=Release
+	cmake --build $(BUILD_RELEASE) --target main
+	@ln -sf $(RELEASE_DIR)/compile_commands.json $(BUILD_DIR)/compile_commands.json
+	./$(BUILD_RELEASE)/main
 
-run: $(TARGET)
-	@echo ======Running $(TARGET)======
-	@$(RUN)
+test:
+	$(CONFIGURE)
+	cmake --build $(BUILD_DEBUG) --target test
+	@ln -sf $(DEBUG_DIR)/compile_commands.json $(BUILD_DIR)/compile_commands.json
+	./$(BUILD_DEBUG)/main
 
 clean:
-	@echo ======Removing $(TARGET)======
-	@$(CLEAN)
-
-.PHONY: all build run clean
+	rm -rf $(BUILD_DIR)
