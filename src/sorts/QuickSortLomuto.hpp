@@ -2,7 +2,7 @@
 
 #include "sorts/SortingAlgorithm.hpp"
 
-class QuickSortLamuto final : public SortingAlgorithm {
+class QuickSortLomuto final : public SortingAlgorithm {
 	std::shared_ptr<SyncingModel> _model;
 
 	int partition(const int l, const int r) {

@@ -33,7 +33,7 @@ test:
 	$(CONFIGURE)
 	cmake --build $(BUILD_DEBUG) --target test
 	@ln -sf $(DEBUG_DIR)/compile_commands.json $(BUILD_DIR)/compile_commands.json
-	./$(BUILD_DEBUG)/main
+	./$(BUILD_DEBUG)/test
 
 clean:
 	rm -rf $(BUILD_DIR)
