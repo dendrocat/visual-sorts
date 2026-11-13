@@ -36,7 +36,7 @@
 - **QuickSort со случайной опорой**
 - **QuickSort с двумя опорными элементами**
 
-Чтобы подключить алгоритм, добавьте соответствующий вызов `f.add_algorithm(...)`
+Чтобы подключить алгоритм, добавьте соответствующий вызов `f.addAlgorithm(...)`
 в `src/registery.cpp`.
 
 ## Визуализации
@@ -210,7 +210,7 @@ class MySort final : public SortingAlgorithm {
 void registerAlgorithms() {
     auto& f = AlgorithmFactory::instance();
 
-    f.add_algorithm([]() { return std::make_unique<MySort>(); });
+    f.addAlgorithm([]() { return std::make_unique<MySort>(); });
 }
 ```
 
@@ -224,7 +224,7 @@ void registerAlgorithms() {
 void registerVisuals() {
 	auto& f = VisualizerFactory::instance();
 
-	f.add_visual("myvisual", [](const VectorModel& model) {
+	f.addVisual("myvisual", [](const VectorModel& model) {
 		return std::make_unique<MyVisual>(model);
 	});
 }

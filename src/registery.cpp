@@ -22,18 +22,18 @@ void registerAlgorithms() {
 	// f.add_algorithm([]() { return std::make_unique<BubbleSort>(); });
 	// f.add_algorithm([]() { return std::make_unique<SelectionSort>(); });
 	// f.add_algorithm([]() { return std::make_unique<MergeSort>(); });
-	f.add_algorithm([]() { return std::make_unique<QuickSortLomuto>(); });
+	f.addAlgorithm([]() { return std::make_unique<QuickSortLomuto>(); });
 	// f.add_algorithm([]() { return std::make_unique<QuickSortHoare>(); });
 	// f.add_algorithm([]() { return std::make_unique<QuickSortRandom>(); });
-	f.add_algorithm([]() { return std::make_unique<QuickSortDualPivot>(); });
+	f.addAlgorithm([]() { return std::make_unique<QuickSortDualPivot>(); });
 }
 
 void registerVisuals() {
 	auto& f = VisualizerFactory::instance();
 
-	f.add_visual("bar",
+	f.addVisual("bar",
 				 [](const VectorModel& model) { return std::make_unique<Bar>(model); });
-	f.add_visual("ellipse", [](const VectorModel& model) {
+	f.addVisual("ellipse", [](const VectorModel& model) {
 		return std::make_unique<Ellipse>(model);
 	});
 }

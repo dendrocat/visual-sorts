@@ -18,7 +18,7 @@ class AlgorithmFactory {
 		return factory;
 	}
 
-	void add_algorithm(Creator creator) { _registry.push_back(std::move(creator)); }
+	void addAlgorithm(Creator creator) { _registry.push_back(std::move(creator)); }
 
 	std::unique_ptr<SortingAlgorithm> create(std::size_t index) {
 		if (index >= _registry.size()) return nullptr;

@@ -13,6 +13,7 @@ int main() {
 	sf::RenderWindow window{mode, "sfml", sf::Style::Default, sf::State::Windowed};
 	window.setFramerateLimit(60);
 
+	// TODO: remove hardcoded parameters 
 	constexpr std::size_t vectorSize = 1000;
 	constexpr std::size_t gateSteps = 5;
 	constexpr auto font =

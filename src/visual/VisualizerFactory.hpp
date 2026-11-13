@@ -19,7 +19,7 @@ class VisualizerFactory {
 		return factory;
 	}
 
-	void add_visual(std::string name, Creator creator) {
+	void addVisual(std::string name, Creator creator) {
 		_registry.emplace(name, std::move(creator));
 	}
 

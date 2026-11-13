@@ -2,6 +2,7 @@
 
 #include "SortingAlgorithm.hpp"
 
+//TODO: Write BubbleSort xD
 class BubbleSort final : public SortingAlgorithm {
   public:
 	const std::string_view name() override { return "BubbleSort"; }

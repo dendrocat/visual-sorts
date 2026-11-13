@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
+#TODO: Add prebuilding SFML
+#TODO: Add option for builing to one file without links
+#TODO: Try to minimize count of build systems
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(main LANGUAGES CXX)
@@ -11,7 +15,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(SFML 3 REQUIRED COMPONENTS Graphics)
 find_package(Threads REQUIRED)
 
-add_compile_options( -Wall -Wextra -Wpedantic -pedantic-errors -Werror)
+add_compile_options(-Wall -Wextra -Wpedantic -pedantic-errors -Werror)
 
 add_library(model OBJECT
     src/model/SyncGate.cpp
