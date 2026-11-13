@@ -10,6 +10,10 @@
 #include "sorts/QuickSortRandom.hpp"
 #include "sorts/SelectionSort.hpp"
 
+#include "visual/Bar.hpp"
+#include "visual/Ellipse.hpp"
+#include "visual/VisualizerFactory.hpp"
+
 #include <memory>
 
 void registerAlgorithms() {
@@ -22,4 +26,14 @@ void registerAlgorithms() {
 	// f.add_algorithm([]() { return std::make_unique<QuickSortHoare>(); });
 	// f.add_algorithm([]() { return std::make_unique<QuickSortRandom>(); });
 	f.add_algorithm([]() { return std::make_unique<QuickSortDualPivot>(); });
+}
+
+void registerVisuals() {
+	auto& f = VisualizerFactory::instance();
+
+	f.add_visual("bar",
+				 [](const VectorModel& model) { return std::make_unique<Bar>(model); });
+	f.add_visual("ellipse", [](const VectorModel& model) {
+		return std::make_unique<Ellipse>(model);
+	});
 }

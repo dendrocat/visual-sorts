@@ -23,12 +23,10 @@ class Ellipse final : public VectorVisualizer {
 	float       a, b;
 	float       angle_step;
 
+	sf::Vector2f getPosition(float r, const float angle);
+
 	void onSetSize() override;
 	void onDraw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	// sf::Vector2f getPos(const float r, const float angle);
-	sf::Vector2f getPosition(float r, const float angle);
-	float        getRandomStart();
 
   public:
 	Ellipse(const VectorModel& model);

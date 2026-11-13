@@ -1,7 +1,6 @@
 #include "Bar.hpp"
 
-Bar::Bar(const VectorModel& model) : VectorVisualizer(model) {
-	_bars = std::vector<sf::RectangleShape>(_model.size(), sf::RectangleShape({10, 10}));
+Bar::Bar(const VectorModel& model) : VectorVisualizer(model), _bars(model.size()) {
 	const int n = _model.size();
 	for (int i = 0; i < n; ++i) {
 		auto& bar = _bars[i];

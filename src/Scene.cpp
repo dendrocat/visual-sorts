@@ -1,14 +1,15 @@
 #include "Scene.hpp"
-#include "visual/Ellipse.hpp"
+#include "visual/VisualizerFactory.hpp"
 
 #include <string>
 
-Scene::Scene(const std::size_t vectorSize, const std::size_t gateSteps)
+Scene::Scene(const std::string visualName, const std::size_t vectorSize,
+			 const std::size_t gateSteps)
 	: _model(std::make_shared<SyncingModel>(vectorSize, gateSteps)) {
 	_sorting = std::make_unique<SortingManager>(_model);
 
 	_stat = std::make_unique<Statistics>(_model->container());
-	_visual = std::make_unique<Ellipse>(_model->container());
+	_visual = VisualizerFactory::instance().create(visualName, _model->container());
 }
 
 void Scene::setSize(sf::Vector2u windowSize) {

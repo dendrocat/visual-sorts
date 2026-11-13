@@ -5,6 +5,7 @@
 
 int main() {
 	registerAlgorithms();
+	registerVisuals();
 
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	mode.size = mode.size / 100u * 80u;
@@ -14,9 +15,9 @@ int main() {
 
 	constexpr std::size_t vectorSize = 1000;
 	constexpr std::size_t gateSteps = 5;
-	constexpr const char* font =
+	constexpr auto font =
 		"/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
-	Scene scene{vectorSize, gateSteps};
+	Scene scene{"ellipse", vectorSize, gateSteps};
 	scene.setSize(mode.size);
 	scene.setFont(font);
 	scene.start();
