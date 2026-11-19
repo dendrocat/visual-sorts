@@ -18,7 +18,7 @@ class Scene final : public sf::Drawable {
 	std::unique_ptr<SortingManager> _sorting;
 
   public:
-	Scene(visual::ID visual, const std::size_t vectorSize = 1000,
+	Scene(visual::Type visual, const std::size_t vectorSize = 1000,
 		  const std::size_t gateSteps = 5);
 
 	Scene(const Scene&) = delete;

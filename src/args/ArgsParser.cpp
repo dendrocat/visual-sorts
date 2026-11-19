@@ -1,36 +1,30 @@
 #include "ArgsParser.hpp"
 
-#include <string>
+#include "exceptions/ArgsErrors.hpp"
 
 #include <charconv>
+#include <string>
 
 bool ArgsParser::help() const noexcept { return _help; }
 bool ArgsParser::list() const noexcept { return _list; }
-
-const std::optional<std::string>& ArgsParser::error() const noexcept { return _error; }
 
 const std::optional<int>& ArgsParser::vectorSize() const noexcept { return _vectorSize; }
 const std::optional<int>& ArgsParser::gateSteps() const noexcept { return _gateSteps; }
 const std::optional<std::string>& ArgsParser::visual() const noexcept { return _visual; }
 const std::optional<bool>& ArgsParser::quadratic() const noexcept { return _quadratic; }
 
-bool ArgsParser::parseInt(std::string_view sv, int& out) {
+int ArgsParser::parseInt(std::string_view sv) {
 	auto end = sv.data() + sv.size();
-	auto [ptr, ec] = std::from_chars(sv.data(), end, out);
+	int  res;
+	auto [ptr, ec] = std::from_chars(sv.data(), end, res);
 
-	if (ec == std::errc::invalid_argument) {
-		_error = "Not a number: '" + std::string(sv) + "'";
-		return false;
-	}
-	if (ec == std::errc::result_out_of_range) {
-		_error = "Number out of range: '" + std::string(sv) + "'";
-		return false;
-	}
-	if (ptr != end) {
-		_error = "Trailing characters in number: '" + std::string(sv) + "'";
-		return false;
-	}
-	return true;
+	if (ec == std::errc::invalid_argument)
+		throw ParseError("Not a number: '" + std::string(sv) + "'");
+	if (ec == std::errc::result_out_of_range)
+		throw ParseError("Number out of range: '" + std::string(sv) + "'");
+	if (ptr != end)
+		throw ParseError("Trailing characters in number: '" + std::string(sv) + "'");
+	return res;
 }
 
 void ArgsParser::parse(const int argc, const char* argv[]) {
@@ -49,7 +43,7 @@ void ArgsParser::parse(const int argc, const char* argv[]) {
 			continue;
 		}
 		if (i + 1 >= argc) {
-			_error = "Not enough arguments for " + std::string(arg);
+			throw ParseError("Not enough arguments for '" + std::string(arg) + "'");
 			return;
 		}
 		++i;
@@ -57,13 +51,9 @@ void ArgsParser::parse(const int argc, const char* argv[]) {
 			_visual = std::string_view(argv[i]);
 			continue;
 		}
-		int val;
-		if (!parseInt(argv[i], val)) return;
+		int val = parseInt(argv[i]);
 		if (arg == "-s" || arg == "--size") _vectorSize = val;
 		else if (arg == "-g" || arg == "--gate") _gateSteps = val;
-		else {
-			_error = "Unknown option: " + std::string(arg);
-			return;
-		}
+		else throw ParseError("Unknown option '" + std::string(arg) + "'");
 	}
 }

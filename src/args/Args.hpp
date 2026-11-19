@@ -4,22 +4,26 @@
 #include "ArgsValidator.hpp"
 #include "visual.hpp"
 
+#include <expected>
+
+struct ArgsError {
+	const std::string error;
+};
+
 class Args final {
   private:
 	ArgsParser    _parser;
 	ArgsValidator _validator;
 
-	std::vector<std::string> _errors;
-
-  public:
 	Args(const int argc, const char* argv[]);
 
-	const std::vector<std::string>& errors() const noexcept;
+  public:
+	static std::expected<Args, ArgsError> parse(const int argc, const char* argv[]);
 
-	std::size_t vectorSize() const noexcept;
-	std::size_t gateSteps() const noexcept;
-	visual::ID  visual() const noexcept;
-	bool        quadratic() const noexcept;
+	std::size_t  vectorSize() const noexcept;
+	std::size_t  gateSteps() const noexcept;
+	visual::Type visual() const noexcept;
+	bool         quadratic() const noexcept;
 
 	bool help() const noexcept;
 	bool list() const noexcept;

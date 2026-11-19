@@ -4,15 +4,12 @@
 #include "visual.hpp"
 
 #include <string>
-#include <vector>
 
 class ArgsValidator final {
-	std::size_t _vectorSize;
-	std::size_t _gateSteps;
-	visual::ID  _visual;
-	bool        _quadratic;
-
-	std::vector<std::string> _errors;
+	std::size_t  _vectorSize;
+	std::size_t  _gateSteps;
+	visual::Type _visual;
+	bool         _quadratic;
 
 	void validateVisual(const std::optional<std::string>& name);
 	int  validateRange(const std::optional<int>& check, const int minValue,
@@ -22,10 +19,8 @@ class ArgsValidator final {
   public:
 	void validate(const ArgsParser& parser);
 
-	const std::vector<std::string>& errors() const noexcept;
-
-	std::size_t vectorSize() const noexcept;
-	std::size_t gateSteps() const noexcept;
-	visual::ID  visual() const noexcept;
-	bool        quadratic() const noexcept;
+	std::size_t  vectorSize() const noexcept;
+	std::size_t  gateSteps() const noexcept;
+	visual::Type visual() const noexcept;
+	bool         quadratic() const noexcept;
 };

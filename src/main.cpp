@@ -1,7 +1,9 @@
-#include "Scene.hpp"
 #include "args/Args.hpp"
+
 #include "registery.hpp"
 #include "visual.hpp"
+
+#include "Scene.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -12,27 +14,22 @@ void printError(const std::string_view sv) {
 }
 
 int main(const int argc, const char* argv[]) {
-	visual::ID  visual;
-	std::size_t vectorSize;
-	std::size_t gateSteps;
-	bool        quadratic;
-	{
-		Args args{argc, argv};
-		if (!args.errors().empty()) {
-			for (const auto& e : args.errors()) printError(e);
-			return 1;
-		}
-		if (args.help() || args.list()) {
-			if (args.help()) args.printHelp();
-			if (args.list()) args.printList();
-			return 0;
-		}
-
-		visual = args.visual();
-		vectorSize = args.vectorSize();
-		gateSteps = args.gateSteps();
-		quadratic = args.quadratic();
+	auto parsed = Args::parse(argc, argv);
+	if (!parsed) {
+		printError(parsed.error().error);
+		return 1;
 	}
+	const Args& args = *parsed;
+
+	if (args.help() || args.list()) {
+		if (args.help()) args.printHelp();
+		if (args.list()) args.printList();
+		return 0;
+	}
+	visual::Type visual = args.visual();
+	std::size_t  vectorSize = args.vectorSize();
+	std::size_t  gateSteps = args.gateSteps();
+	bool         quadratic = args.quadratic();
 
 	registerAlgorithms(quadratic);
 	registerVisuals();

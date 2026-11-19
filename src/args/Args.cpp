@@ -1,28 +1,35 @@
 #include "Args.hpp"
 
 #include "defaults.hpp"
+#include "exceptions/ArgsErrors.hpp"
 #include "visual.hpp"
 
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 Args::Args(const int argc, const char* argv[]) {
 	_parser.parse(argc, argv);
-	if (_parser.error().has_value()) {
-		_errors.push_back(_parser.error().value());
-		return;
-	}
 	if (_parser.help() || _parser.list()) return;
 	_validator.validate(_parser);
-	_errors.append_range(_validator.errors());
 }
 
-const std::vector<std::string>& Args::errors() const noexcept { return _errors; }
+std::expected<Args, ArgsError> Args::parse(const int argc, const char* argv[]) {
+	try {
+		return Args{argc, argv};
+	}
+	catch (const ParseError& e) {
+		return std::unexpected<ArgsError>{std::move(e.what())};
+	}
+	catch (const ValidationError& e) {
+		return std::unexpected<ArgsError>{std::move(e.what())};
+	}
+}
 
-std::size_t Args::vectorSize() const noexcept { return _validator.vectorSize(); }
-std::size_t Args::gateSteps() const noexcept { return _validator.gateSteps(); }
-visual::ID  Args::visual() const noexcept { return _validator.visual(); }
-bool        Args::quadratic() const noexcept { return _validator.quadratic(); }
+std::size_t  Args::vectorSize() const noexcept { return _validator.vectorSize(); }
+std::size_t  Args::gateSteps() const noexcept { return _validator.gateSteps(); }
+visual::Type Args::visual() const noexcept { return _validator.visual(); }
+bool         Args::quadratic() const noexcept { return _validator.quadratic(); }
 
 bool Args::help() const noexcept { return _parser.help(); }
 bool Args::list() const noexcept { return _parser.list(); }
@@ -40,9 +47,13 @@ void Args::printHelp() {
 
 	std::cout << "Options:\n";
 	row("-s, --size <size>",
-		"Set array size (default: " + std::to_string(defaults::vectorSize) + ")");
+		"Set array size [" + std::to_string(defaults::minVectorSize) + ", " +
+			std::to_string(defaults::maxVectorSize) +
+			"] (default: " + std::to_string(defaults::vectorSize) + ")");
 	row("-g, --gate <steps>",
-		"Set steps per frame (default: " + std::to_string(defaults::gateSteps) + ")");
+		"Set steps per frame [" + std::to_string(defaults::minGateSteps) + ", " +
+			std::to_string(defaults::maxGateSteps) +
+			"] (default: " + std::to_string(defaults::gateSteps) + ")");
 	row("-v, --visual <visual>",
 		"Set visualisation (default: " + std::string(defaults::visual) + ")");
 	row("--quadratic",

@@ -11,7 +11,7 @@
 class VisualizerFactory {
   private:
 	using Creator = std::function<std::unique_ptr<VectorVisualizer>(const VectorModel&)>;
-	std::unordered_map<visual::ID, Creator> _registry;
+	std::unordered_map<visual::Type, Creator> _registry;
 
 	VisualizerFactory() { }
 
@@ -21,11 +21,11 @@ class VisualizerFactory {
 		return factory;
 	}
 
-	void addVisual(visual::ID id, Creator creator) {
+	void addVisual(visual::Type id, Creator creator) {
 		_registry.emplace(id, std::move(creator));
 	}
 
-	std::unique_ptr<VectorVisualizer> create(visual::ID id, const VectorModel& model) {
+	std::unique_ptr<VectorVisualizer> create(visual::Type id, const VectorModel& model) {
 		if (!_registry.contains(id)) return nullptr;
 		return _registry[id](model);
 	}

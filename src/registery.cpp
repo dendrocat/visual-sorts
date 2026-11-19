@@ -34,9 +34,9 @@ void registerAlgorithms(bool quadratic) {
 void registerVisuals() {
 	auto& f = VisualizerFactory::instance();
 
-	f.addVisual(visual::ID::Bar,
+	f.addVisual(visual::Type::Bar,
 				[](const VectorModel& model) { return std::make_unique<Bar>(model); });
-	f.addVisual(visual::ID::Ellipse, [](const VectorModel& model) {
+	f.addVisual(visual::Type::Ellipse, [](const VectorModel& model) {
 		return std::make_unique<Ellipse>(model);
 	});
 }
