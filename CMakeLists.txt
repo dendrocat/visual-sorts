@@ -26,6 +26,7 @@ target_include_directories(model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_executable(main
     src/main.cpp
+	src/ArgsParser.cpp
 	src/registery.cpp
 	src/Scene.cpp
 

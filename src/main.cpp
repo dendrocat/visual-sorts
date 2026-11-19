@@ -1,9 +1,13 @@
+#include "ArgsParser.hpp"
 #include "Scene.hpp"
 #include "registery.hpp"
 
 #include <SFML/Graphics.hpp>
 
-int main() {
+int main(const int argc, const char* argv[]) {
+	ArgsParser parser{argc, argv};
+	if (parser.error()) return -1;
+	if (parser.help()) return 0;
 	registerAlgorithms();
 	registerVisuals();
 
@@ -13,12 +17,10 @@ int main() {
 	sf::RenderWindow window{mode, "sfml", sf::Style::Default, sf::State::Windowed};
 	window.setFramerateLimit(60);
 
-	// TODO: remove hardcoded parameters 
-	constexpr std::size_t vectorSize = 1000;
-	constexpr std::size_t gateSteps = 5;
-	constexpr auto font =
-		"/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
-	Scene scene{"ellipse", vectorSize, gateSteps};
+	// TODO: remove hardcoded parameters
+	constexpr auto font = "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
+
+	Scene scene{parser.visual(), parser.vectorSize(), parser.gateSteps()};
 	scene.setSize(mode.size);
 	scene.setFont(font);
 	scene.start();
