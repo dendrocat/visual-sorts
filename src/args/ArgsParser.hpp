@@ -13,7 +13,7 @@ class ArgsParser final {
 	std::optional<std::string> _type;
 	std::optional<bool>        _quadratic;
 
-	int parseInt(std::string_view sv);
+	int parseInt(std::string_view sv) const;
 
   public:
 	void parse(const int argc, const char* argv[]);

@@ -1,6 +1,7 @@
 #include "ArgsParser.hpp"
 
 #include "exceptions/ArgsErrors.hpp"
+#include "options.hpp"
 
 #include <charconv>
 #include <string>
@@ -13,7 +14,7 @@ const std::optional<int>& ArgsParser::gateSteps() const noexcept { return _gateS
 const std::optional<std::string>& ArgsParser::type() const noexcept { return _type; }
 const std::optional<bool>& ArgsParser::quadratic() const noexcept { return _quadratic; }
 
-int ArgsParser::parseInt(std::string_view sv) {
+int ArgsParser::parseInt(std::string_view sv) const {
 	auto end = sv.data() + sv.size();
 	int  res;
 	auto [ptr, ec] = std::from_chars(sv.data(), end, res);
@@ -30,30 +31,36 @@ int ArgsParser::parseInt(std::string_view sv) {
 void ArgsParser::parse(const int argc, const char* argv[]) {
 	for (int i = 1; i < argc; ++i) {
 		const std::string_view arg = argv[i];
-		if (arg == "-h" || arg == "--help") {
+
+		auto optionSpec = options::findOption(arg);
+		if (optionSpec == nullptr)
+			throw ParseError("Unknown option '" + std::string(arg) + "'");
+
+		if (optionSpec->type == options::Type::Value) {
+			if (i + 1 >= argc)
+				throw ParseError("Missing value for '" + std::string(arg) + "'");
+			++i;
+		}
+
+		switch (optionSpec->sence) {
+		case options::Sense::Help:
 			_help = true;
 			return;
-		}
-		if (arg == "-l" || arg == "--list") {
+		case options::Sense::List:
 			_list = true;
 			return;
-		}
-		if (arg == "--quadratic") {
+		case options::Sense::Quadratic:
 			_quadratic = true;
-			continue;
+			break;
+		case options::Sense::Type:
+			_type = std::string(argv[i]);
+			break;
+		case options::Sense::Size:
+			_vectorSize = parseInt(argv[i]);
+			break;
+		case options::Sense::Gate:
+			_gateSteps = parseInt(argv[i]);
+			break;
 		}
-		if (i + 1 >= argc) {
-			throw ParseError("Not enough arguments for '" + std::string(arg) + "'");
-			return;
-		}
-		++i;
-		if (arg == "-t" || arg == "--type") {
-			_type = std::string_view(argv[i]);
-			continue;
-		}
-		int val = parseInt(argv[i]);
-		if (arg == "-s" || arg == "--size") _vectorSize = val;
-		else if (arg == "-g" || arg == "--gate") _gateSteps = val;
-		else throw ParseError("Unknown option '" + std::string(arg) + "'");
 	}
 }

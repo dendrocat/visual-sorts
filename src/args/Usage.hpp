@@ -1,43 +1,43 @@
 #pragma once
 
-#include "defaults.hpp"
+#include "options.hpp"
 #include "visual.hpp"
 
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 class Usage final {
+	static const std::string left(const options::OptionSpec& spec) noexcept {
+		std::string s;
+		if (spec.shortName) s += spec.shortName;
+		if (spec.shortName && spec.longName) s += ", ";
+		if (spec.longName) s += spec.longName;
+		return s;
+	}
+
   public:
-	static void help() {
+	static void help() noexcept {
 		constexpr std::size_t W = 28;
 
 		auto row = [](const std::string& left, const std::string& right) {
 			std::cout << "  " << std::left << std::setw(W) << left << right << "\n";
 		};
 		std::cout << "Usage: visual-sort\n";
-		row("-h, --help", "Show this help");
-		row("-l, --list", "Show available visualisations");
-		std::cout << "\n";
-
 		std::cout << "Options:\n";
-		row("-t, --type <visualisation type>",
-			"Set visualisation type (default: " + std::string(defaults::visual) + ")");
-		row("-s, --size <size>",
-			"Set array size [" + std::to_string(defaults::minVectorSize) + ", " +
-				std::to_string(defaults::maxVectorSize) +
-				"] (default: " + std::to_string(defaults::vectorSize) + ")");
-		row("-g, --gate <steps>",
-			"Set steps per frame [" + std::to_string(defaults::minGateSteps) + ", " +
-				std::to_string(defaults::maxGateSteps) +
-				"] (default: " + std::to_string(defaults::gateSteps) + ")");
-		row("--quadratic", "Enalbe quadtatic sorts (default: " +
-							   std::to_string(defaults::quadratic) + ")");
+		for (const auto& spec : options::specs) row(left(spec), spec.desc);
 
 		std::cout << "\nExample:\n";
-		std::cout << "  visual-sort -v " << defaults::visual << " -s "
-				  << defaults::vectorSize << " -g " << defaults::gateSteps << "\n";
+		std::cout << "  visual-sort ";
+		auto type = options::findOption(options::Sense::Type);
+		std::cout << type->shortName << " " << options::defaultType << " ";
+		auto size = options::findOption(options::Sense::Size);
+		std::cout << size->shortName << " " << options::defaultVectorSize << " ";
+		auto gate = options::findOption(options::Sense::Gate);
+		std::cout << gate->shortName << " " << options::defaultGateSteps << "\n";
 	}
-	static void list() {
+
+	static void list() noexcept {
 		std::cout << "Available visualisation types:\n";
 		for (const auto& vs : visual::visuals) {
 			std::cout << "  " << vs.name << "\n";
