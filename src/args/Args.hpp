@@ -22,12 +22,9 @@ class Args final {
 
 	std::size_t  vectorSize() const noexcept;
 	std::size_t  gateSteps() const noexcept;
-	visual::Type visual() const noexcept;
+	visual::Type type() const noexcept;
 	bool         quadratic() const noexcept;
 
 	bool help() const noexcept;
 	bool list() const noexcept;
-
-	static void printHelp();
-	static void printList();
 };

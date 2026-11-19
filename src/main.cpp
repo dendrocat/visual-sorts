@@ -1,4 +1,5 @@
 #include "args/Args.hpp"
+#include "args/Usage.hpp"
 
 #include "registery.hpp"
 #include "visual.hpp"
@@ -22,11 +23,11 @@ int main(const int argc, const char* argv[]) {
 	const Args& args = *parsed;
 
 	if (args.help() || args.list()) {
-		if (args.help()) args.printHelp();
-		if (args.list()) args.printList();
+		if (args.help()) Usage::help();
+		if (args.list()) Usage::list();
 		return 0;
 	}
-	visual::Type visual = args.visual();
+	visual::Type type = args.type();
 	std::size_t  vectorSize = args.vectorSize();
 	std::size_t  gateSteps = args.gateSteps();
 	bool         quadratic = args.quadratic();
@@ -43,7 +44,7 @@ int main(const int argc, const char* argv[]) {
 	// TODO: remove hardcoded parameters
 	constexpr auto font = "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
 
-	Scene scene{visual, vectorSize, gateSteps};
+	Scene scene{type, vectorSize, gateSteps};
 	scene.setSize(mode.size);
 	scene.setFont(font);
 	scene.start();

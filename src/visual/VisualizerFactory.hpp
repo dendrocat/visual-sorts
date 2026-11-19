@@ -21,13 +21,14 @@ class VisualizerFactory {
 		return factory;
 	}
 
-	void addVisual(visual::Type id, Creator creator) {
-		_registry.emplace(id, std::move(creator));
+	void addVisual(visual::Type type, Creator creator) {
+		_registry.emplace(type, std::move(creator));
 	}
 
-	std::unique_ptr<VectorVisualizer> create(visual::Type id, const VectorModel& model) {
-		if (!_registry.contains(id)) return nullptr;
-		return _registry[id](model);
+	std::unique_ptr<VectorVisualizer> create(visual::Type       type,
+											 const VectorModel& model) {
+		if (!_registry.contains(type)) return nullptr;
+		return _registry[type](model);
 	}
 
 	VisualizerFactory(const VisualizerFactory&) = delete;

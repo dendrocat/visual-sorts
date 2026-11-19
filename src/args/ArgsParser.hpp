@@ -10,7 +10,7 @@ class ArgsParser final {
 
 	std::optional<int>         _vectorSize;
 	std::optional<int>         _gateSteps;
-	std::optional<std::string> _visual;
+	std::optional<std::string> _type;
 	std::optional<bool>        _quadratic;
 
 	int parseInt(std::string_view sv);
@@ -23,6 +23,6 @@ class ArgsParser final {
 
 	const std::optional<int>&         vectorSize() const noexcept;
 	const std::optional<int>&         gateSteps() const noexcept;
-	const std::optional<std::string>& visual() const noexcept;
+	const std::optional<std::string>& type() const noexcept;
 	const std::optional<bool>&        quadratic() const noexcept;
 };

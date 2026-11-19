@@ -10,7 +10,7 @@ bool ArgsParser::list() const noexcept { return _list; }
 
 const std::optional<int>& ArgsParser::vectorSize() const noexcept { return _vectorSize; }
 const std::optional<int>& ArgsParser::gateSteps() const noexcept { return _gateSteps; }
-const std::optional<std::string>& ArgsParser::visual() const noexcept { return _visual; }
+const std::optional<std::string>& ArgsParser::type() const noexcept { return _type; }
 const std::optional<bool>& ArgsParser::quadratic() const noexcept { return _quadratic; }
 
 int ArgsParser::parseInt(std::string_view sv) {
@@ -47,8 +47,8 @@ void ArgsParser::parse(const int argc, const char* argv[]) {
 			return;
 		}
 		++i;
-		if (arg == "-v" || arg == "--visual") {
-			_visual = std::string_view(argv[i]);
+		if (arg == "-t" || arg == "--type") {
+			_type = std::string_view(argv[i]);
 			continue;
 		}
 		int val = parseInt(argv[i]);

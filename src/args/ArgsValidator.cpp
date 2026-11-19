@@ -4,11 +4,11 @@
 #include "exceptions/ArgsErrors.hpp"
 #include <string_view>
 
-void ArgsValidator::validateVisual(const std::optional<std::string>& visual) {
+void ArgsValidator::validateType(const std::optional<std::string>& visual) {
 	auto visualName = defaults::visual;
 	if (visual.has_value()) visualName = visual.value();
 
-	if (!visual::tryParseVisual(visualName, _visual))
+	if (!visual::tryParseVisual(visualName, _type))
 		throw ValidationError("Visual '" + std::string(visualName) +
 							  "' doesn't supported");
 }
@@ -27,7 +27,7 @@ int ArgsValidator::validateRange(const std::optional<int>& check, const int minV
 }
 
 void ArgsValidator::validate(const ArgsParser& parser) {
-	validateVisual(parser.visual());
+	validateType(parser.type());
 	_vectorSize =
 		validateRange(parser.vectorSize(), defaults::minVectorSize,
 					  defaults::maxVectorSize, defaults::vectorSize, "Vector size");
@@ -38,5 +38,5 @@ void ArgsValidator::validate(const ArgsParser& parser) {
 
 std::size_t  ArgsValidator::vectorSize() const noexcept { return _vectorSize; }
 std::size_t  ArgsValidator::gateSteps() const noexcept { return _gateSteps; }
-visual::Type ArgsValidator::visual() const noexcept { return _visual; }
+visual::Type ArgsValidator::type() const noexcept { return _type; }
 bool         ArgsValidator::quadratic() const noexcept { return _quadratic; }
