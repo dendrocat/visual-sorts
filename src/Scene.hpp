@@ -2,6 +2,7 @@
 
 #include "model/SyncingModel.hpp"
 #include "sorts/SortingManager.hpp"
+#include "visual.hpp"
 #include "visual/Statistics.hpp"
 #include "visual/VectorVisualizer.hpp"
 
@@ -17,7 +18,7 @@ class Scene final : public sf::Drawable {
 	std::unique_ptr<SortingManager> _sorting;
 
   public:
-	Scene(std::string_view visualName, const std::size_t vectorSize = 1000,
+	Scene(visual::ID visual, const std::size_t vectorSize = 1000,
 		  const std::size_t gateSteps = 5);
 
 	Scene(const Scene&) = delete;

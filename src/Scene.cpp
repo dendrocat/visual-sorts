@@ -3,13 +3,12 @@
 
 #include <string>
 
-Scene::Scene(std::string_view visualName, const std::size_t vectorSize,
-			 const std::size_t gateSteps)
+Scene::Scene(visual::ID visual, const std::size_t vectorSize, const std::size_t gateSteps)
 	: _model(std::make_shared<SyncingModel>(vectorSize, gateSteps)) {
 	_sorting = std::make_unique<SortingManager>(_model);
 
 	_stat = std::make_unique<Statistics>(_model->container());
-	_visual = VisualizerFactory::instance().create(visualName, _model->container());
+	_visual = VisualizerFactory::instance().create(visual, _model->container());
 }
 
 void Scene::setSize(sf::Vector2u windowSize) {

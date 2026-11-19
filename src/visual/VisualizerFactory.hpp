@@ -1,5 +1,7 @@
 #pragma once
 
+#include "visual.hpp"
+
 #include "VectorVisualizer.hpp"
 
 #include <functional>
@@ -9,7 +11,7 @@
 class VisualizerFactory {
   private:
 	using Creator = std::function<std::unique_ptr<VectorVisualizer>(const VectorModel&)>;
-	std::unordered_map<std::string_view, Creator> _registry;
+	std::unordered_map<visual::ID, Creator> _registry;
 
 	VisualizerFactory() { }
 
@@ -19,14 +21,13 @@ class VisualizerFactory {
 		return factory;
 	}
 
-	void addVisual(std::string_view name, Creator creator) {
-		_registry.emplace(std::move(name), std::move(creator));
+	void addVisual(visual::ID id, Creator creator) {
+		_registry.emplace(id, std::move(creator));
 	}
 
-	std::unique_ptr<VectorVisualizer> create(std::string_view   name,
-											 const VectorModel& model) {
-		if (!_registry.contains(name)) return nullptr;
-		return _registry[name](model);
+	std::unique_ptr<VectorVisualizer> create(visual::ID id, const VectorModel& model) {
+		if (!_registry.contains(id)) return nullptr;
+		return _registry[id](model);
 	}
 
 	VisualizerFactory(const VisualizerFactory&) = delete;
