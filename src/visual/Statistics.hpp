@@ -21,7 +21,7 @@ class Statistics final : public sf::Drawable {
 
 		_text.setFillColor(sf::Color::White);
 		lines.resize(5);
-		lines[1] = "Vector size: " + std::to_string(_model.size());
+		lines[1] = "Array size: " + std::to_string(_model.size());
 	}
 	void setFont(const std::string& font) {
 		if (!_font.openFromFile(font)) throw FontNotFoundException{font};

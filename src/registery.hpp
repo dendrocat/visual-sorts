@@ -1,4 +1,4 @@
 #pragma once
 
-void registerAlgorithms();
+void registerAlgorithms(bool quadratic);
 void registerVisuals();
