@@ -2,9 +2,10 @@
 
 #include "exceptions/ArgsErrors.hpp"
 
-int ArgsValidator::validateRange(const std::optional<int>& check, const int minValue,
-								 const int maxValue, const int defaultValue,
-								 const std::string_view name) {
+template <std::integral TNum>
+TNum ArgsValidator::validateRange(const std::optional<TNum>& check, const TNum minValue,
+								  const TNum maxValue, const TNum defaultValue,
+								  const std::string_view name) {
 	if (!check.has_value()) return defaultValue;
 	if (check.value() < minValue || check.value() > maxValue)
 		throw ValidationError(std::string(name) + " must be in [" +

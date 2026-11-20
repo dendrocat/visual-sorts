@@ -3,6 +3,7 @@
 #include "exceptions/ArgsErrors.hpp"
 
 #include <charconv>
+#include <iostream>
 #include <string>
 #include <utility>
 
@@ -20,18 +21,17 @@ visual::Type ArgsParser::parseType(std::string_view sv) {
 	return type;
 }
 
-int ArgsParser::parseInt(std::string_view sv) {
-	auto end = sv.data() + sv.size();
-	int  res;
-	auto [ptr, ec] = std::from_chars(sv.data(), end, res);
+std::size_t ArgsParser::parseSizeT(std::string_view sv) {
+	int res;
+	auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), res);
 
 	if (ec == std::errc::invalid_argument)
 		throw ParseError("Not a number: '" + std::string(sv) + "'");
 	if (ec == std::errc::result_out_of_range)
 		throw ParseError("Number out of range: '" + std::string(sv) + "'");
-	if (ptr != end)
+	if (ptr != sv.end() || res < 0)
 		throw ParseError("Trailing characters in number: '" + std::string(sv) + "'");
-	return res;
+	return static_cast<std::size_t>(res);
 }
 
 options::Options ArgsParser::parse(const int argc, const char* argv[]) {
@@ -63,10 +63,10 @@ options::Options ArgsParser::parse(const int argc, const char* argv[]) {
 			setOnce(options.type, parseType(argv[i]), arg);
 			break;
 		case options::Sense::Size:
-			setOnce(options.vectorSize, parseInt(argv[i]), arg);
+			setOnce(options.vectorSize, parseSizeT(argv[i]), arg);
 			break;
 		case options::Sense::Gate:
-			setOnce(options.gateSteps, parseInt(argv[i]), arg);
+			setOnce(options.gateSteps, parseSizeT(argv[i]), arg);
 			break;
 		}
 		if (options.help || options.list) break;

@@ -5,14 +5,16 @@
 #include "options.hpp"
 #include "visual.hpp"
 
+#include <concepts>
 #include <string>
 #include <string_view>
 
 class ArgsValidator final {
 	static visual::Type validateType(const std::optional<std::string>& name);
 
-	static int validateRange(const std::optional<int>& check, const int minValue,
-							 const int maxValue, const int defaultValue,
+	template <std::integral TNum>
+	static TNum validateRange(const std::optional<TNum>& check, const TNum minValue,
+							 const TNum maxValue, const TNum defaultValue,
 							 const std::string_view name);
 
   public:

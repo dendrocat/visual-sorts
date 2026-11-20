@@ -23,21 +23,21 @@ struct Options {
 	std::optional<bool> help;
 	std::optional<bool> list;
 
-	std::optional<int> vectorSize;
-	std::optional<int> gateSteps;
+	std::optional<std::size_t> vectorSize;
+	std::optional<std::size_t> gateSteps;
 
 	std::optional<visual::Type> type;
 
 	std::optional<bool> quadratic;
 };
 
-inline constexpr int minVectorSize = 10;
-inline constexpr int maxVectorSize = 50000;
-inline constexpr int defaultVectorSize = 1000;
+inline constexpr std::size_t minVectorSize = 10;
+inline constexpr std::size_t maxVectorSize = 50000;
+inline constexpr std::size_t defaultVectorSize = 1000;
 
-inline constexpr int minGateSteps = 1;
-inline constexpr int maxGateSteps = 1000;
-inline constexpr int defaultGateSteps = 5;
+inline constexpr std::size_t minGateSteps = 1;
+inline constexpr std::size_t maxGateSteps = 1000;
+inline constexpr std::size_t defaultGateSteps = 5;
 
 inline constexpr visual::Type defaultType = visual::Type::Bar;
 
