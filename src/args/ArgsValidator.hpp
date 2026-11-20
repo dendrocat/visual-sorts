@@ -21,6 +21,8 @@ class ArgsValidator final {
 							 const std::string_view name);
 
   public:
+	MOVE_ONLY(ArgsValidator);
+
 	void validate(const ArgsParser& parser);
 
 	std::size_t  vectorSize() const noexcept;

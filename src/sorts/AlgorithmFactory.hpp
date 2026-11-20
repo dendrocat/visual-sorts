@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "SortingAlgorithm.hpp"
 
 #include <functional>
@@ -13,6 +15,8 @@ class AlgorithmFactory {
 	AlgorithmFactory() { }
 
   public:
+	NO_COPY_MOVE(AlgorithmFactory);
+
 	static AlgorithmFactory& instance() {
 		static AlgorithmFactory factory;
 		return factory;
@@ -24,9 +28,4 @@ class AlgorithmFactory {
 		if (index >= _registry.size()) return nullptr;
 		return _registry[index]();
 	}
-
-	AlgorithmFactory(const AlgorithmFactory&) = delete;
-	AlgorithmFactory& operator=(const AlgorithmFactory&) = delete;
-	AlgorithmFactory(AlgorithmFactory&&) = delete;
-	AlgorithmFactory& operator=(AlgorithmFactory&&) = delete;
 };

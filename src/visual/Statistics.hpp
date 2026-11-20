@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "exceptions/FontNotFoundException.hpp"
 #include "model/VectorModel.hpp"
 
@@ -23,6 +25,8 @@ class Statistics final : public sf::Drawable {
 		lines.resize(5);
 		lines[1] = "Array size: " + std::to_string(_model.size());
 	}
+	NO_COPY_MOVE(Statistics);
+
 	void setFont(const std::string& font) {
 		if (!_font.openFromFile(font)) throw FontNotFoundException{font};
 	}

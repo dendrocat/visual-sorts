@@ -22,6 +22,8 @@ class SortingManager final {
 	void executeSort();
 
   public:
+	NO_COPY_MOVE(SortingManager);
+
 	SortingManager(std::shared_ptr<SyncingModel> model);
 
 	bool              isSorting();

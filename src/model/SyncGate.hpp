@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include <condition_variable>
 #include <mutex>
 #include <stop_token>
@@ -15,9 +17,9 @@ class SyncGate final {
 	bool _locked = false;
 
   public:
-	SyncGate(std::size_t maxSteps = 5);
-	SyncGate(const SyncGate&) = delete;
-	SyncGate& operator=(const SyncGate&) = delete;
+	NO_COPY_MOVE(SyncGate);
+
+	SyncGate(std::size_t maxSteps);
 
 	void setStopToken(std::stop_token stoken) noexcept;
 

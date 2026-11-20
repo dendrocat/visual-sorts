@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "SyncGate.hpp"
 #include "VectorModel.hpp"
 
@@ -9,10 +11,9 @@ class SyncingModel final {
 	SyncGate    _gate;
 
   public:
-	SyncingModel(const std::size_t size, const std::size_t gateSteps);
+	NO_COPY_MOVE(SyncingModel);
 
-	SyncingModel(const VectorModel&) = delete;
-	SyncingModel& operator=(const VectorModel&) = delete;
+	SyncingModel(const std::size_t size, const std::size_t gateSteps);
 
 	[[nodiscard]] std::size_t size() const noexcept;
 

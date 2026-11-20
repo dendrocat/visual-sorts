@@ -19,11 +19,7 @@ class Scene final : public sf::Drawable {
 
   public:
 	Scene(visual::Type type, const std::size_t vectorSize, const std::size_t gateSteps);
-
-	Scene(const Scene&) = delete;
-	Scene& operator=(const Scene&) = delete;
-	Scene(Scene&&) = delete;
-	Scene& operator=(Scene&&) = delete;
+	NO_COPY_MOVE(Scene);
 
 	void setSize(sf::Vector2u windowSize);
 	void setFont(const std::string& font);
