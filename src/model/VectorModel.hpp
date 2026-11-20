@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include <vector>
 
 class VectorModel final {
@@ -9,10 +11,9 @@ class VectorModel final {
 	int               _compares, _sets, _swaps;
 
   public:
-	VectorModel(std::size_t size);
+	MOVE_ONLY(VectorModel);
 
-	VectorModel(const VectorModel&) = delete;
-	VectorModel& operator=(const VectorModel&) = delete;
+	VectorModel(std::size_t size);
 
 	[[nodiscard]] std::size_t size() const noexcept;
 

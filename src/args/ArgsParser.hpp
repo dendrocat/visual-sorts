@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include <optional>
 #include <string>
 #include <string_view>
@@ -19,6 +21,8 @@ class ArgsParser final {
 	static int  parseInt(std::string_view sv);
 
   public:
+	MOVE_ONLY(ArgsParser);
+
 	void parse(const int argc, const char* argv[]);
 
 	bool help() const noexcept;

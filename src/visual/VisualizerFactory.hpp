@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "visual.hpp"
 
 #include "VectorVisualizer.hpp"
@@ -31,8 +33,5 @@ class VisualizerFactory {
 		return _registry[type](model);
 	}
 
-	VisualizerFactory(const VisualizerFactory&) = delete;
-	VisualizerFactory& operator=(const VisualizerFactory&) = delete;
-	VisualizerFactory(VisualizerFactory&&) = delete;
-	VisualizerFactory& operator=(VisualizerFactory&&) = delete;
+	NO_COPY_MOVE(VisualizerFactory);
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "options.hpp"
 #include "visual.hpp"
 
@@ -18,6 +20,8 @@ class Usage final {
 	}
 
   public:
+	NO_CREATE(Usage);
+
 	static void help() noexcept {
 		constexpr std::size_t W = 28;
 

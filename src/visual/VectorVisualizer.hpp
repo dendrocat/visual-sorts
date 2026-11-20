@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "model/VectorModel.hpp"
 
 #include <SFML/Graphics/Color.hpp>
@@ -32,6 +34,5 @@ class VectorVisualizer : public sf::Drawable {
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 
 	virtual ~VectorVisualizer() = default;
-	VectorVisualizer(const VectorVisualizer&) = delete;
-	VectorVisualizer& operator=(const VectorVisualizer&) = delete;
+	NO_COPY_MOVE(VectorVisualizer);
 };

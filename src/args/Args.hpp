@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macroses.hpp"
+
 #include "ArgsParser.hpp"
 #include "ArgsValidator.hpp"
 #include "visual.hpp"
@@ -19,6 +21,8 @@ class Args final {
 	Args(const int argc, const char* argv[]);
 
   public:
+	MOVE_ONLY(Args);
+
 	static std::expected<Args, ArgsError> parse(const int argc, const char* argv[]);
 
 	std::size_t  vectorSize() const noexcept;
