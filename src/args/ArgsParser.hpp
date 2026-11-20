@@ -2,18 +2,21 @@
 
 #include <optional>
 #include <string>
+#include <string_view>
 
 class ArgsParser final {
 
-	bool _help = false;
-	bool _list = false;
+	std::optional<bool> _help;
+	std::optional<bool> _list;
 
 	std::optional<int>         _vectorSize;
 	std::optional<int>         _gateSteps;
 	std::optional<std::string> _type;
 	std::optional<bool>        _quadratic;
 
-	int parseInt(std::string_view sv) const;
+	template <typename T>
+	static void setOnce(std::optional<T>& field, T&& value, std::string_view opt);
+	static int  parseInt(std::string_view sv);
 
   public:
 	void parse(const int argc, const char* argv[]);

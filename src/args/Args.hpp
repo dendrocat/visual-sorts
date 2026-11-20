@@ -5,6 +5,7 @@
 #include "visual.hpp"
 
 #include <expected>
+#include <string>
 
 struct ArgsError {
 	const std::string error;

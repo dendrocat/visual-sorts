@@ -16,12 +16,6 @@ inline constexpr VisualString visuals[] = {
 	{Type::Ellipse, "ellipse"},
 };
 
-constexpr std::string_view nameOf(Type v) {
-	for (const auto& vs : visuals)
-		if (vs.id == v) return vs.name;
-	return {};
-}
-
 constexpr bool tryParseVisual(std::string_view s, Type& out) {
 	for (const auto& vs : visuals) {
 		if (vs.name == s) {

@@ -45,10 +45,10 @@
 - **`ellipse`** - точки на эллипсе: угол зависит от позиции элемента в массиве,
   а расстояние до центра - от отклонения текущего значения от изначального.
 
-Активная визуализация задаётся в `src/main.cpp` при создании сцены:
+Активная визуализация задаётся через парамерты `-t`/`--type` при запуске приложения:
 
-```cpp
-Scene scene{"ellipse", vectorSize, gateSteps};
+```bash
+./build/debug/main -t bar
 ```
 
 ## Требования
@@ -57,7 +57,7 @@ Scene scene{"ellipse", vectorSize, gateSteps};
 - Компилятор с поддержкой C++23.
 - CMake 3.22 или новее.
 - SFML 3 (компонент `Graphics`).
-- Ninja (используется в `Makefile`).
+- Ninja (используется `CMake`).
 - Шрифт JetBrainsMono Nerd Font, путь по умолчанию:
   `/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf`.
 
@@ -119,19 +119,16 @@ cmake --build build/debug --target test
 
 ## Настройка
 
-Основные параметры задаются в `src/main.cpp`:
+Основные параметры задаются через CLI аргументы:
 
-```cpp
-constexpr std::size_t vectorSize = 1000; // количество элементов
-constexpr std::size_t gateSteps = 5;     // операций сортировки за один кадр
-
-Scene scene{"ellipse", vectorSize, gateSteps};
-```
-
-- Увеличение `vectorSize` делает визуализацию плотнее и замедляет сортировку.
-- `gateSteps` управляет плавностью: чем меньше значение, тем медленнее и детальнее
-  показывается процесс.
-- Название визуализации (`"bar"` или `"ellipse"`) выбирает режим отображения.
+| Argument    | Sense                                             |
+| ----------- | ------------------------------------------------- |
+| -h, --help  | Show help                                         |
+| -l, --list  | Show available visualisation types                |
+| -t, --type  | Set visualisation type (default: bar)             |
+| -s, --size  | Set array size \[10, 100000\] (default: 1000)     |
+| -t, --type  | Set operations per frame \[1, 1000\] (default: 5) |
+| --quadratic | Enable quadtatic sorts (default: false)           |
 
 ## Архитектура
 
@@ -159,6 +156,7 @@ src/
 │   ├── Ellipse              # визуализация точками на эллипсе
 │   └── Statistics.hpp       # текстовая статистика поверх сцены
 └── exceptions/              # исключения
+    └── ArgsErrors.hpp      # ошибки парсинга `ParseError` и валидации `ValidationError`
 ```
 
 ### Как это работает
@@ -190,13 +188,10 @@ src/
 #include "sorts/SortingAlgorithm.hpp"
 
 class MySort final : public SortingAlgorithm {
-    std::shared_ptr<SyncingModel> _model;
-
   public:
     const std::string_view name() override { return "MySort"; }
 
     void sort(std::shared_ptr<SyncingModel> model) override {
-        _model = std::move(model);
         // ...
     }
 };

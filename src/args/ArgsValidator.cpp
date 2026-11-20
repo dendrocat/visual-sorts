@@ -4,8 +4,9 @@
 #include "options.hpp"
 
 #include <string_view>
+#include <utility>
 
-visual::Type ArgsValidator::validateType(const std::optional<std::string>& visual) const {
+visual::Type ArgsValidator::validateType(const std::optional<std::string>& visual) {
 	visual::Type type;
 
 	auto visualName = options::defaultType;
@@ -17,16 +18,16 @@ visual::Type ArgsValidator::validateType(const std::optional<std::string>& visua
 	return type;
 }
 
-int ArgsValidator::validateRange(const std::optional<int>& check, const int minValue,
-								 const int maxValue, const int defaultValue,
-								 const std::string_view name) const {
+template <std::integral In, std::integral Out>
+Out ArgsValidator::validateRange(const std::optional<In>& check, const Out minValue,
+								 const Out maxValue, const Out defaultValue,
+								 const std::string_view name) {
 	if (!check.has_value()) return defaultValue;
-	if (check.value() < minValue || check.value() > maxValue) {
+	if (std::cmp_less(check.value(), minValue) ||
+		std::cmp_greater(check.value(), maxValue))
 		throw ValidationError(std::string(name) + " must be in [" +
 							  std::to_string(minValue) + ", " + std::to_string(maxValue) +
 							  "]. Got: " + std::to_string(check.value()));
-		return defaultValue;
-	}
 	return check.value();
 }
 
@@ -34,11 +35,11 @@ void ArgsValidator::validate(const ArgsParser& parser) {
 	_type = validateType(parser.type());
 	_vectorSize =
 		validateRange(parser.vectorSize(), options::minVectorSize, options::maxVectorSize,
-					  options::defaultVectorSize, "Vector size");
+					  options::defaultVectorSize, "Array size");
 	_gateSteps =
 		validateRange(parser.gateSteps(), options::minGateSteps, options::maxGateSteps,
 					  options::defaultGateSteps, "Gate steps");
-	_quadratic = parser.quadratic().value_or(options::quadratic);
+	_quadratic = parser.quadratic().value_or(options::defaultQuadratic);
 }
 
 std::size_t  ArgsValidator::vectorSize() const noexcept { return _vectorSize; }

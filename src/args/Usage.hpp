@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <string_view>
 
 class Usage final {
 	static const std::string left(const options::OptionSpec& spec) noexcept {
@@ -20,7 +21,7 @@ class Usage final {
 	static void help() noexcept {
 		constexpr std::size_t W = 28;
 
-		auto row = [](const std::string& left, const std::string& right) {
+		auto row = [](std::string_view left, std::string_view right) {
 			std::cout << "  " << std::left << std::setw(W) << left << right << "\n";
 		};
 		std::cout << "Usage: visual-sort\n";

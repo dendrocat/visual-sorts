@@ -1,20 +1,24 @@
 #pragma once
 
 #include "ArgsParser.hpp"
+#include "options.hpp"
 #include "visual.hpp"
 
+#include <concepts>
 #include <string>
 
 class ArgsValidator final {
-	std::size_t  _vectorSize;
-	std::size_t  _gateSteps;
-	visual::Type _type;
-	bool         _quadratic;
+	std::size_t  _vectorSize = options::defaultVectorSize;
+	std::size_t  _gateSteps = options::defaultGateSteps;
+	visual::Type _type = visual::Type::Bar;
+	bool         _quadratic = options::defaultQuadratic;
 
-	visual::Type validateType(const std::optional<std::string>& name) const;
-	int          validateRange(const std::optional<int>& check, const int minValue,
-							   const int maxValue, const int defaultValue,
-							   const std::string_view name) const;
+	static visual::Type validateType(const std::optional<std::string>& name);
+
+	template <std::integral In, std::integral Out>
+	static Out validateRange(const std::optional<In>& check, const Out minValue,
+							 const Out maxValue, const Out defaultValue,
+							 const std::string_view name);
 
   public:
 	void validate(const ArgsParser& parser);

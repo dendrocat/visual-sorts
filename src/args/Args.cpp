@@ -13,10 +13,10 @@ std::expected<Args, ArgsError> Args::parse(const int argc, const char* argv[]) {
 		return Args{argc, argv};
 	}
 	catch (const ParseError& e) {
-		return std::unexpected<ArgsError>{std::move(e.what())};
+		return std::unexpected<ArgsError>{e.what()};
 	}
 	catch (const ValidationError& e) {
-		return std::unexpected<ArgsError>{std::move(e.what())};
+		return std::unexpected<ArgsError>{e.what()};
 	}
 }
 

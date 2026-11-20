@@ -62,4 +62,5 @@ int main(const int argc, const char* argv[]) {
 		window.draw(scene);
 		window.display();
 	}
+	return 0;
 }
