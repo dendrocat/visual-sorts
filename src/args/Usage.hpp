@@ -35,7 +35,8 @@ class Usage final {
 		std::cout << "\nExample:\n";
 		std::cout << "  visual-sort ";
 		auto type = options::findOption(options::Sense::Type);
-		std::cout << type->shortName << " " << options::defaultType << " ";
+		std::cout << type->shortName << " " << visual::nameOf(options::defaultType)
+				  << " ";
 		auto size = options::findOption(options::Sense::Size);
 		std::cout << size->shortName << " " << options::defaultVectorSize << " ";
 		auto gate = options::findOption(options::Sense::Gate);

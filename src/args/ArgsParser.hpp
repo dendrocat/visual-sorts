@@ -3,6 +3,7 @@
 #include "macroses.hpp"
 
 #include "options.hpp"
+#include "visual.hpp"
 
 #include <optional>
 #include <string_view>
@@ -10,7 +11,9 @@
 class ArgsParser final {
 	template <typename T>
 	static void setOnce(std::optional<T>& field, T&& value, std::string_view opt);
-	static int  parseInt(std::string_view sv);
+
+	static visual::Type parseType(std::string_view sv);
+	static int          parseInt(std::string_view sv);
 
   public:
 	NO_CREATE(ArgsParser);

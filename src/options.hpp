@@ -3,7 +3,6 @@
 #include "visual.hpp"
 
 #include <optional>
-#include <string>
 #include <string_view>
 
 namespace options
@@ -24,12 +23,12 @@ struct Options {
 	std::optional<bool> help;
 	std::optional<bool> list;
 
-	std::optional<int>  vectorSize;
+	std::optional<int> vectorSize;
 	std::optional<int> gateSteps;
-	std::optional<bool> quadratic;
 
 	std::optional<visual::Type> type;
-	std::optional<std::string>  typeString;
+
+	std::optional<bool> quadratic;
 };
 
 inline constexpr int minVectorSize = 10;
@@ -40,7 +39,7 @@ inline constexpr int minGateSteps = 1;
 inline constexpr int maxGateSteps = 1000;
 inline constexpr int defaultGateSteps = 5;
 
-inline constexpr std::string_view defaultType = "bar";
+inline constexpr visual::Type defaultType = visual::Type::Bar;
 
 inline constexpr bool defaultQuadratic = false;
 

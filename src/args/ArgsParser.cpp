@@ -13,6 +13,13 @@ void ArgsParser::setOnce(std::optional<T>& field, T&& value, std::string_view op
 	field = std::forward<T>(value);
 }
 
+visual::Type ArgsParser::parseType(std::string_view sv) {
+	visual::Type type;
+	if (!visual::tryParseVisual(sv, type))
+		throw ParseError("Visual '" + std::string(sv) + "' doesn't supported");
+	return type;
+}
+
 int ArgsParser::parseInt(std::string_view sv) {
 	auto end = sv.data() + sv.size();
 	int  res;
@@ -53,7 +60,7 @@ options::Options ArgsParser::parse(const int argc, const char* argv[]) {
 			setOnce(options.quadratic, true, arg);
 			break;
 		case options::Sense::Type:
-			setOnce(options.typeString, std::string(argv[i]), arg);
+			setOnce(options.type, parseType(argv[i]), arg);
 			break;
 		case options::Sense::Size:
 			setOnce(options.vectorSize, parseInt(argv[i]), arg);
