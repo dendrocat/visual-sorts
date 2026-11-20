@@ -7,7 +7,7 @@ namespace visual
 enum class Type { Bar, Ellipse };
 
 struct VisualString {
-	Type             id;
+	Type             type;
 	std::string_view name;
 };
 
@@ -16,10 +16,19 @@ inline constexpr VisualString visuals[] = {
 	{Type::Ellipse, "ellipse"},
 };
 
+constexpr std::string_view nameOf(Type type) {
+	for (const auto& vs : visuals) {
+		if (vs.type == type) {
+			return vs.name;
+		}
+	}
+	return {};
+}
+
 constexpr bool tryParseVisual(std::string_view s, Type& out) {
 	for (const auto& vs : visuals) {
 		if (vs.name == s) {
-			out = vs.id;
+			out = vs.type;
 			return true;
 		}
 	}

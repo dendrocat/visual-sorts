@@ -1,6 +1,8 @@
 #pragma once
 
-#include <cstddef>
+#include "visual.hpp"
+
+#include <optional>
 #include <string_view>
 
 namespace options
@@ -17,6 +19,18 @@ struct OptionSpec {
 	std::string_view desc;
 };
 
+struct Options {
+	std::optional<bool> help;
+	std::optional<bool> list;
+
+	std::optional<std::size_t> vectorSize;
+	std::optional<std::size_t> gateSteps;
+
+	std::optional<visual::Type> type;
+
+	std::optional<bool> quadratic;
+};
+
 inline constexpr std::size_t minVectorSize = 10;
 inline constexpr std::size_t maxVectorSize = 50000;
 inline constexpr std::size_t defaultVectorSize = 1000;
@@ -25,7 +39,7 @@ inline constexpr std::size_t minGateSteps = 1;
 inline constexpr std::size_t maxGateSteps = 1000;
 inline constexpr std::size_t defaultGateSteps = 5;
 
-inline constexpr std::string_view defaultType = "bar";
+inline constexpr visual::Type defaultType = visual::Type::Bar;
 
 inline constexpr bool defaultQuadratic = false;
 

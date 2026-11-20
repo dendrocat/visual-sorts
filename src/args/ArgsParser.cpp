@@ -1,19 +1,11 @@
 #include "ArgsParser.hpp"
 
 #include "exceptions/ArgsErrors.hpp"
-#include "options.hpp"
 
 #include <charconv>
+#include <iostream>
 #include <string>
 #include <utility>
-
-bool ArgsParser::help() const noexcept { return _help.value_or(false); }
-bool ArgsParser::list() const noexcept { return _list.value_or(false); }
-
-const std::optional<int>& ArgsParser::vectorSize() const noexcept { return _vectorSize; }
-const std::optional<int>& ArgsParser::gateSteps() const noexcept { return _gateSteps; }
-const std::optional<std::string>& ArgsParser::type() const noexcept { return _type; }
-const std::optional<bool>& ArgsParser::quadratic() const noexcept { return _quadratic; }
 
 template <typename T>
 void ArgsParser::setOnce(std::optional<T>& field, T&& value, std::string_view opt) {
@@ -22,21 +14,28 @@ void ArgsParser::setOnce(std::optional<T>& field, T&& value, std::string_view op
 	field = std::forward<T>(value);
 }
 
-int ArgsParser::parseInt(std::string_view sv) {
-	auto end = sv.data() + sv.size();
-	int  res;
-	auto [ptr, ec] = std::from_chars(sv.data(), end, res);
+visual::Type ArgsParser::parseType(std::string_view sv) {
+	visual::Type type;
+	if (!visual::tryParseVisual(sv, type))
+		throw ParseError("Visual '" + std::string(sv) + "' doesn't supported");
+	return type;
+}
+
+std::size_t ArgsParser::parseSizeT(std::string_view sv) {
+	int res;
+	auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), res);
 
 	if (ec == std::errc::invalid_argument)
 		throw ParseError("Not a number: '" + std::string(sv) + "'");
 	if (ec == std::errc::result_out_of_range)
 		throw ParseError("Number out of range: '" + std::string(sv) + "'");
-	if (ptr != end)
+	if (ptr != sv.end() || res < 0)
 		throw ParseError("Trailing characters in number: '" + std::string(sv) + "'");
-	return res;
+	return static_cast<std::size_t>(res);
 }
 
-void ArgsParser::parse(const int argc, const char* argv[]) {
+options::Options ArgsParser::parse(const int argc, const char* argv[]) {
+	options::Options options;
 	for (int i = 1; i < argc; ++i) {
 		const std::string_view arg = argv[i];
 
@@ -52,24 +51,25 @@ void ArgsParser::parse(const int argc, const char* argv[]) {
 
 		switch (optionSpec->sense) {
 		case options::Sense::Help:
-			setOnce(_help, true, arg);
-			_help = true;
-			return;
+			setOnce(options.help, true, arg);
+			break;
 		case options::Sense::List:
-			setOnce(_list, true, arg);
-			return;
+			setOnce(options.list, true, arg);
+			break;
 		case options::Sense::Quadratic:
-			setOnce(_quadratic, true, arg);
+			setOnce(options.quadratic, true, arg);
 			break;
 		case options::Sense::Type:
-			setOnce(_type, std::string(argv[i]), arg);
+			setOnce(options.type, parseType(argv[i]), arg);
 			break;
 		case options::Sense::Size:
-			setOnce(_vectorSize, parseInt(argv[i]), arg);
+			setOnce(options.vectorSize, parseSizeT(argv[i]), arg);
 			break;
 		case options::Sense::Gate:
-			setOnce(_gateSteps, parseInt(argv[i]), arg);
+			setOnce(options.gateSteps, parseSizeT(argv[i]), arg);
 			break;
 		}
+		if (options.help || options.list) break;
 	}
+	return options;
 }
