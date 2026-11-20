@@ -1,7 +1,7 @@
 #include "args/Args.hpp"
 #include "args/Usage.hpp"
 
-#include "registery.hpp"
+#include "Registry.hpp"
 #include "visual.hpp"
 
 #include "Scene.hpp"
@@ -15,12 +15,12 @@ void printError(const std::string_view sv) {
 }
 
 int main(const int argc, const char* argv[]) {
-	auto parsed = Args::parse(argc, argv);
-	if (!parsed) {
-		printError(parsed.error().error);
+	auto expectedArgs = Args::parse(argc, argv);
+	if (!expectedArgs) {
+		printError(expectedArgs.error().error);
 		return 1;
 	}
-	const Args& args = *parsed;
+	const Args& args = expectedArgs.value();
 
 	if (args.help() || args.list()) {
 		if (args.help()) Usage::help();
@@ -32,8 +32,7 @@ int main(const int argc, const char* argv[]) {
 	std::size_t  gateSteps = args.gateSteps();
 	bool         quadratic = args.quadratic();
 
-	registerAlgorithms(quadratic);
-	registerVisuals();
+	Registry::init(quadratic);
 
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	mode.size = mode.size * 80u / 100u;

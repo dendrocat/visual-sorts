@@ -1,4 +1,4 @@
-#include "registery.hpp"
+#include "Registry.hpp"
 
 #include "sorts/AlgorithmFactory.hpp"
 
@@ -17,7 +17,7 @@
 
 #include <memory>
 
-void registerAlgorithms(bool quadratic) {
+void Registry::registerAlgorithms(bool quadratic) {
 	auto& f = AlgorithmFactory::instance();
 
 	if (quadratic) {
@@ -31,7 +31,7 @@ void registerAlgorithms(bool quadratic) {
 	f.addAlgorithm([]() { return std::make_unique<QuickSortDualPivot>(); });
 }
 
-void registerVisuals() {
+void Registry::registerVisuals() {
 	auto& f = VisualizerFactory::instance();
 
 	f.addVisual(visual::Type::Bar,
@@ -39,4 +39,9 @@ void registerVisuals() {
 	f.addVisual(visual::Type::Ellipse, [](const VectorModel& model) {
 		return std::make_unique<Ellipse>(model);
 	});
+}
+
+void Registry::init(bool quadratic) {
+	registerAlgorithms(quadratic);
+	registerVisuals();
 }
