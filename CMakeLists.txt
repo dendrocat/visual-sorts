@@ -29,7 +29,7 @@ add_executable(main
 	src/args/ArgsParser.cpp
 	src/args/ArgsValidator.cpp
 	src/args/Args.cpp
-	src/registery.cpp
+	src/registry.cpp
 	src/Scene.cpp
 
     $<TARGET_OBJECTS:model>
