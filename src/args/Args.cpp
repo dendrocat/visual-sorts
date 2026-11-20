@@ -1,29 +1,31 @@
 #include "Args.hpp"
 
+#include "args/ArgsParser.hpp"
+#include "args/ArgsValidator.hpp"
 #include "exceptions/ArgsErrors.hpp"
 
-Args::Args(const int argc, const char* argv[]) {
-	_parser.parse(argc, argv);
-	if (_parser.help() || _parser.list()) return;
-	_validator.validate(_parser);
-}
+Args::Args(options::Options options) : _options(std::move(options)) { }
 
-std::expected<Args, ArgsError> Args::parse(const int argc, const char* argv[]) {
+std::expected<Args, Error> Args::parse(const int argc, const char* argv[]) {
 	try {
-		return Args{argc, argv};
+		auto options = ArgsParser::parse(argc, argv);
+		ArgsValidator::validate(options);
+		return Args{std::move(options)};
 	}
 	catch (const ParseError& e) {
-		return std::unexpected<ArgsError>{e.what()};
+		return std::unexpected<Error>{e.what()};
 	}
 	catch (const ValidationError& e) {
-		return std::unexpected<ArgsError>{e.what()};
+		return std::unexpected<Error>{e.what()};
 	}
 }
 
-std::size_t  Args::vectorSize() const noexcept { return _validator.vectorSize(); }
-std::size_t  Args::gateSteps() const noexcept { return _validator.gateSteps(); }
-visual::Type Args::type() const noexcept { return _validator.type(); }
-bool         Args::quadratic() const noexcept { return _validator.quadratic(); }
+bool Args::help() const noexcept { return _options.help.value(); }
+bool Args::list() const noexcept { return _options.list.value(); }
 
-bool Args::help() const noexcept { return _parser.help(); }
-bool Args::list() const noexcept { return _parser.list(); }
+int Args::vectorSize() const noexcept { return _options.vectorSize.value(); }
+int Args::gateSteps() const noexcept { return _options.gateSteps.value(); }
+
+visual::Type Args::type() const noexcept { return _options.type.value(); }
+
+bool Args::quadratic() const noexcept { return _options.quadratic.value(); }

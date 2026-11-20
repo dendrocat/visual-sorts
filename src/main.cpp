@@ -8,8 +8,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
-
 void printError(const std::string_view sv) {
 	std::cerr << "\033[31m" << sv << "\033[0m\n";
 }
@@ -17,7 +15,7 @@ void printError(const std::string_view sv) {
 int main(const int argc, const char* argv[]) {
 	auto expectedArgs = Args::parse(argc, argv);
 	if (!expectedArgs) {
-		printError(expectedArgs.error().error);
+		printError(expectedArgs.error().message);
 		return 1;
 	}
 	const Args& args = expectedArgs.value();

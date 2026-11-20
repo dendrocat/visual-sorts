@@ -1,19 +1,10 @@
 #include "ArgsParser.hpp"
 
 #include "exceptions/ArgsErrors.hpp"
-#include "options.hpp"
 
 #include <charconv>
 #include <string>
 #include <utility>
-
-bool ArgsParser::help() const noexcept { return _help.value_or(false); }
-bool ArgsParser::list() const noexcept { return _list.value_or(false); }
-
-const std::optional<int>& ArgsParser::vectorSize() const noexcept { return _vectorSize; }
-const std::optional<int>& ArgsParser::gateSteps() const noexcept { return _gateSteps; }
-const std::optional<std::string>& ArgsParser::type() const noexcept { return _type; }
-const std::optional<bool>& ArgsParser::quadratic() const noexcept { return _quadratic; }
 
 template <typename T>
 void ArgsParser::setOnce(std::optional<T>& field, T&& value, std::string_view opt) {
@@ -36,7 +27,8 @@ int ArgsParser::parseInt(std::string_view sv) {
 	return res;
 }
 
-void ArgsParser::parse(const int argc, const char* argv[]) {
+options::Options ArgsParser::parse(const int argc, const char* argv[]) {
+	options::Options options;
 	for (int i = 1; i < argc; ++i) {
 		const std::string_view arg = argv[i];
 
@@ -52,24 +44,25 @@ void ArgsParser::parse(const int argc, const char* argv[]) {
 
 		switch (optionSpec->sense) {
 		case options::Sense::Help:
-			setOnce(_help, true, arg);
-			_help = true;
-			return;
+			setOnce(options.help, true, arg);
+			break;
 		case options::Sense::List:
-			setOnce(_list, true, arg);
-			return;
+			setOnce(options.list, true, arg);
+			break;
 		case options::Sense::Quadratic:
-			setOnce(_quadratic, true, arg);
+			setOnce(options.quadratic, true, arg);
 			break;
 		case options::Sense::Type:
-			setOnce(_type, std::string(argv[i]), arg);
+			setOnce(options.typeString, std::string(argv[i]), arg);
 			break;
 		case options::Sense::Size:
-			setOnce(_vectorSize, parseInt(argv[i]), arg);
+			setOnce(options.vectorSize, parseInt(argv[i]), arg);
 			break;
 		case options::Sense::Gate:
-			setOnce(_gateSteps, parseInt(argv[i]), arg);
+			setOnce(options.gateSteps, parseInt(argv[i]), arg);
 			break;
 		}
+		if (options.help || options.list) break;
 	}
+	return options;
 }

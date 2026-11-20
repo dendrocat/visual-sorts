@@ -2,34 +2,34 @@
 
 #include "macroses.hpp"
 
-#include "ArgsParser.hpp"
-#include "ArgsValidator.hpp"
+#include "options.hpp"
 #include "visual.hpp"
 
 #include <expected>
 #include <string>
 
-struct ArgsError {
-	const std::string error;
+struct Error {
+	const std::string message;
 };
 
 class Args final {
   private:
-	ArgsParser    _parser;
-	ArgsValidator _validator;
+	options::Options _options;
 
-	Args(const int argc, const char* argv[]);
+	Args(options::Options options);
 
   public:
 	MOVE_ONLY(Args);
 
-	static std::expected<Args, ArgsError> parse(const int argc, const char* argv[]);
-
-	std::size_t  vectorSize() const noexcept;
-	std::size_t  gateSteps() const noexcept;
-	visual::Type type() const noexcept;
-	bool         quadratic() const noexcept;
+	static std::expected<Args, Error> parse(const int argc, const char* argv[]);
 
 	bool help() const noexcept;
 	bool list() const noexcept;
+
+	int vectorSize() const noexcept;
+	int gateSteps() const noexcept;
+
+	visual::Type type() const noexcept;
+
+	bool quadratic() const noexcept;
 };
