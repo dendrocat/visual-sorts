@@ -6,43 +6,36 @@ cmake_minimum_required(VERSION 3.22)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(main LANGUAGES CXX)
+project(VisualSorts LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(SFML 3 REQUIRED COMPONENTS Graphics)
-find_package(Threads REQUIRED)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_compile_options(-Wall -Wextra -Wpedantic -pedantic-errors -Werror)
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+    set(_cc_link "${CMAKE_SOURCE_DIR}/compile_commands.json")
+    set(_cc_real "${CMAKE_BINARY_DIR}/compile_commands.json")
 
-add_library(model OBJECT
-    src/model/SyncGate.cpp
-    src/model/VectorModel.cpp
-    src/model/SyncingModel.cpp
+    add_custom_target(compile_commands ALL
+        COMMAND ${CMAKE_COMMAND} -E rm -f "${_cc_link}"
+        COMMAND ${CMAKE_COMMAND} -E create_symlink "${_cc_real}" "${_cc_link}"
+        COMMENT "Refreshing compile_commands.json symlink"
+        VERBATIM
+    )
+endif()
+
+add_compile_options(
+	-Wall -Wextra
+    "$<$<CONFIG:Debug>:-O0;-g3>"
+    "$<$<CONFIG:Release>:-O3;-DNDEBUG>"
 )
-target_include_directories(model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-add_executable(main
-    src/main.cpp
-	src/args/ArgsParser.cpp
-	src/args/ArgsValidator.cpp
-	src/args/Args.cpp
-	src/Registry.cpp
-	src/Scene.cpp
+option(BUILD_TESTS "Build tests" OFF)
 
-    $<TARGET_OBJECTS:model>
+add_subdirectory(src)
 
-    src/visual/VectorVisualizer.cpp
-    src/visual/Bar.cpp
-	src/visual/Ellipse.cpp
-
-	src/sorts/SortingManager.cpp
-)
-target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(main PRIVATE SFML::Graphics)
-
-add_executable(test src/test.cpp $<TARGET_OBJECTS:model>)
-target_include_directories(test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(test PRIVATE Threads::Threads)
+if (BUILD_TESTS)
+	add_subdirectory(tests)
+endif()

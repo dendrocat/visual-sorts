@@ -3,7 +3,7 @@
 #include "macroses.hpp"
 
 #include "options.hpp"
-#include "visual.hpp"
+#include "visual/visual.hpp"
 
 #include <optional>
 #include <string_view>

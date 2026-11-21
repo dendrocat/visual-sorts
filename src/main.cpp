@@ -2,11 +2,13 @@
 #include "args/Usage.hpp"
 
 #include "Registry.hpp"
-#include "visual.hpp"
 
-#include "Scene.hpp"
+#include "visual/Scene.hpp"
 
 #include <SFML/Graphics.hpp>
+
+#include <string_view>
+#include <iostream>
 
 void printError(const std::string_view sv) {
 	std::cerr << "\033[31m" << sv << "\033[0m\n";
