@@ -1,22 +1,23 @@
 #pragma once
 
+#include <VisualType.hpp>
+
 #include <string_view>
 
 namespace visual
 {
-enum class Type { Bar, Ellipse };
 
 struct VisualString {
-	Type             type;
+	VisualType       type;
 	std::string_view name;
 };
 
 inline constexpr VisualString visuals[] = {
-	{Type::Bar,     "bar"    },
-	{Type::Ellipse, "ellipse"},
+	{VisualType::Bar,     "bar"    },
+	{VisualType::Ellipse, "ellipse"},
 };
 
-constexpr std::string_view nameOf(Type type) {
+constexpr std::string_view nameOf(VisualType type) {
 	for (const auto& vs : visuals) {
 		if (vs.type == type) {
 			return vs.name;
@@ -25,7 +26,7 @@ constexpr std::string_view nameOf(Type type) {
 	return {};
 }
 
-constexpr bool tryParseVisual(std::string_view s, Type& out) {
+constexpr bool tryParseVisual(std::string_view s, VisualType& out) {
 	for (const auto& vs : visuals) {
 		if (vs.name == s) {
 			out = vs.type;
@@ -34,4 +35,5 @@ constexpr bool tryParseVisual(std::string_view s, Type& out) {
 	}
 	return false;
 }
+
 }; // namespace visual

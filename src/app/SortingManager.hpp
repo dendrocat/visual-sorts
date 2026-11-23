@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Shuffler.hpp"
 #include "model/SyncingModel.hpp"
+#include "sorts/Shuffler.hpp"
 
 #include <memory>
 #include <thread>

@@ -2,7 +2,7 @@
 
 #include "macroses.hpp"
 
-#include "visual.hpp"
+#include "VisualType.hpp"
 
 #include "VectorVisualizer.hpp"
 
@@ -13,7 +13,7 @@
 class VisualizerFactory {
   private:
 	using Creator = std::function<std::unique_ptr<VectorVisualizer>(const VectorModel&)>;
-	std::unordered_map<visual::Type, Creator> _registry;
+	std::unordered_map<VisualType, Creator> _registry;
 
 	VisualizerFactory() { }
 
@@ -23,12 +23,11 @@ class VisualizerFactory {
 		return factory;
 	}
 
-	void addVisual(visual::Type type, Creator creator) {
+	void addVisual(VisualType type, Creator creator) {
 		_registry.emplace(type, std::move(creator));
 	}
 
-	std::unique_ptr<VectorVisualizer> create(visual::Type       type,
-											 const VectorModel& model) {
+	std::unique_ptr<VectorVisualizer> create(VisualType type, const VectorModel& model) {
 		if (!_registry.contains(type)) return nullptr;
 		return _registry[type](model);
 	}

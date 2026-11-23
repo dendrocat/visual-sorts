@@ -1,6 +1,6 @@
 #include "SortingManager.hpp"
-#include "AlgorithmFactory.hpp"
-#include "exceptions/SortCanceledException.hpp"
+#include "SortCanceledException.hpp"
+#include "sorts/AlgorithmFactory.hpp"
 
 #include <cassert>
 #include <functional>

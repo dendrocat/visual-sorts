@@ -10,6 +10,7 @@
 #include "sorts/QuickSortRandom.hpp"
 #include "sorts/SelectionSort.hpp"
 
+#include "VisualType.hpp"
 #include "visual/VisualizerFactory.hpp"
 
 #include "visual/Bar.hpp"
@@ -34,9 +35,9 @@ void Registry::registerAlgorithms(bool quadratic) {
 void Registry::registerVisuals() {
 	auto& f = VisualizerFactory::instance();
 
-	f.addVisual(visual::Type::Bar,
+	f.addVisual(VisualType::Bar,
 				[](const VectorModel& model) { return std::make_unique<Bar>(model); });
-	f.addVisual(visual::Type::Ellipse, [](const VectorModel& model) {
+	f.addVisual(VisualType::Ellipse, [](const VectorModel& model) {
 		return std::make_unique<Ellipse>(model);
 	});
 }
