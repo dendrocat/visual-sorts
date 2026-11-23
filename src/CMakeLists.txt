@@ -23,6 +23,7 @@ target_include_directories(model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(model PUBLIC Threads::Threads Includes Exceptions)
 
 add_subdirectory(args)
+add_subdirectory(sorts)
 
 add_executable(main
 	main.cpp
@@ -41,4 +42,11 @@ target_include_directories(main
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_link_libraries(main
-	PRIVATE SFML::Graphics Includes Exceptions Args model)
+	PRIVATE 
+		SFML::Graphics 
+		Includes
+		Exceptions
+		Args
+		model
+		Sorts
+)

@@ -18,7 +18,7 @@ void printError(const std::string_view sv) {
 int main(const int argc, const char* argv[]) {
 	auto expectedOptions = Args::parse(argc, argv);
 	if (!expectedOptions) {
-		printError(expectedOptions.error().message);
+		printError(expectedOptions.error());
 		return 1;
 	}
 	const Options& options = expectedOptions.value();
