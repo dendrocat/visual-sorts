@@ -14,11 +14,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_compile_options(
-	-Wall -Wextra
-    "$<$<CONFIG:Debug>:-O0;-g3>"
-    "$<$<CONFIG:Release>:-O3;-DNDEBUG>"
-)
+add_compile_options( -Wall -Wextra -Wpedantic -pedantic-errors -Werror)
 
 option(BUILD_TESTS "Build tests" OFF)
 
@@ -26,4 +22,12 @@ add_subdirectory(src)
 
 if (BUILD_TESTS)
 	add_subdirectory(tests)
+endif()
+
+if (CMAKE_EXPORT_COMPILE_COMMANDS)
+	file(CREATE_LINK
+		"${CMAKE_BINARY_DIR}/compile_commands.json"
+		"${CMAKE_SOURCE_DIR}/build/compile_commands.json"
+		SYMBOLIC
+	)
 endif()

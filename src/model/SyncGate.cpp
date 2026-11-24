@@ -5,8 +5,11 @@
 SyncGate::SyncGate(std::size_t maxSteps) : _maxSteps(maxSteps), _steps(maxSteps) { }
 
 void SyncGate::setStopToken(std::stop_token stoken) noexcept {
-	std::unique_lock lk(_mutex);
-	_stoken = stoken;
+	{
+		std::unique_lock lk(_mutex);
+		_stoken = stoken;
+	}
+	_cv.notify_all();
 }
 
 void SyncGate::check() {
