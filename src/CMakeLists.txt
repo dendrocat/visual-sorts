@@ -15,16 +15,8 @@ target_include_directories(Exceptions
 
 link_libraries(Includes)
 
-add_library(model
-	STATIC
-		model/SyncGate.cpp
-		model/VectorModel.cpp
-		model/SyncingModel.cpp
-)
-target_include_directories(model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(model PUBLIC Threads::Threads Exceptions)
-
 add_subdirectory(args)
+add_subdirectory(model)
 add_subdirectory(sorts)
 add_subdirectory(visual)
 
@@ -44,7 +36,6 @@ target_link_libraries(main
 	PRIVATE 
 		SFML::Graphics 
 		Args
-		model
 		Sorts
 		Visual
 )

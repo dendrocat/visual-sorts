@@ -22,4 +22,4 @@ target_include_directories(Visual
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(Visual PUBLIC SFML::Graphics model)
+target_link_libraries(Visual PUBLIC SFML::Graphics Model)
