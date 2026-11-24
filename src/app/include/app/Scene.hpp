@@ -1,10 +1,11 @@
 #pragma once
 
-#include "SortingManager.hpp"
 #include "VisualType.hpp"
 #include "model/SyncingModel.hpp"
 #include "visual/Statistics.hpp"
 #include "visual/VectorVisualizer.hpp"
+
+#include "SortingManager.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
 

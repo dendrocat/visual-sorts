@@ -2,16 +2,12 @@
 #include "SortCanceledException.hpp"
 #include "sorts/AlgorithmFactory.hpp"
 
-#include <cassert>
-#include <functional>
 #include <iostream>
 
 SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 	: _model(std::move(model)) {
 	_shuffler = std::make_unique<Shuffler>();
 }
-
-bool SortingManager::isSorting() { return _isSorting; }
 
 const std::string SortingManager::algorithmName() { return _algorithmName; }
 
@@ -28,7 +24,6 @@ void SortingManager::stop() {
 
 void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 	_model->setStopToken(stoken);
-	assert(stoken.stop_possible());
 	try {
 		executeSorts();
 	}
@@ -51,7 +46,6 @@ void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 void SortingManager::executeSorts() {
 	std::size_t idx = 0;
 	while (auto algo = AlgorithmFactory::instance().create(idx++)) {
-		_isSorting = false;
 		_model->clearMarkers();
 		_model->resetMeasures();
 
@@ -60,7 +54,6 @@ void SortingManager::executeSorts() {
 
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 
-		_isSorting = true;
 		_model->clearMarkers();
 		_model->resetMeasures();
 

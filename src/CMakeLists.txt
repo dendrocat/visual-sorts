@@ -19,13 +19,11 @@ add_subdirectory(args)
 add_subdirectory(model)
 add_subdirectory(sorts)
 add_subdirectory(visual)
+add_subdirectory(app)
 
 add_executable(main
 	main.cpp
 	Registry.cpp
-
-	app/Scene.cpp
-	app/SortingManager.cpp
 )
 
 target_include_directories(main
@@ -35,7 +33,10 @@ target_include_directories(main
 target_link_libraries(main
 	PRIVATE 
 		SFML::Graphics 
+		Exceptions
 		Args
+		Model
 		Sorts
 		Visual
+		App
 )

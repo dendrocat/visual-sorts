@@ -13,7 +13,6 @@ class SortingManager final {
 
 	std::unique_ptr<std::jthread> _thread;
 
-	bool        _isSorting = false;
 	std::string _algorithmName;
 
 	void tryExecuteSorts(std::stop_token stoken) noexcept;
@@ -26,7 +25,6 @@ class SortingManager final {
 
 	SortingManager(std::shared_ptr<SyncingModel> model);
 
-	bool              isSorting();
 	const std::string algorithmName();
 
 	void start();

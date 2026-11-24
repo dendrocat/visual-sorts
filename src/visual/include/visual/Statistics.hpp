@@ -2,7 +2,7 @@
 
 #include "macroses.hpp"
 
-#include "exceptions/FontNotFoundException.hpp"
+#include "FontNotFoundException.hpp"
 #include "model/VectorModel.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
