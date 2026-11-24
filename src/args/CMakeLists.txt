@@ -20,4 +20,4 @@ target_include_directories(Args
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(Args PRIVATE Includes Exceptions)
+target_link_libraries(Args PRIVATE Exceptions)

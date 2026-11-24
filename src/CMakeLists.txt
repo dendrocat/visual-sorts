@@ -13,27 +13,26 @@ target_include_directories(Exceptions
 		${CMAKE_SOURCE_DIR}/src/exceptions
 )
 
+link_libraries(Includes)
+
 add_library(model
-	OBJECT
+	STATIC
 		model/SyncGate.cpp
 		model/VectorModel.cpp
 		model/SyncingModel.cpp
 )
 target_include_directories(model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(model PUBLIC Threads::Threads Includes Exceptions)
+target_link_libraries(model PUBLIC Threads::Threads Exceptions)
 
 add_subdirectory(args)
 add_subdirectory(sorts)
+add_subdirectory(visual)
 
 add_executable(main
 	main.cpp
 	Registry.cpp
 
-	visual/VectorVisualizer.cpp
-	visual/Bar.cpp
-	visual/Ellipse.cpp
 	app/Scene.cpp
-
 	app/SortingManager.cpp
 )
 
@@ -44,9 +43,8 @@ target_include_directories(main
 target_link_libraries(main
 	PRIVATE 
 		SFML::Graphics 
-		Includes
-		Exceptions
 		Args
 		model
 		Sorts
+		Visual
 )
