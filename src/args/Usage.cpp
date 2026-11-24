@@ -1,13 +1,14 @@
 #include <args/Usage.hpp>
 
-#include "options.hpp"
-#include "visual.hpp"
-
+#include <cstddef>
 #include <format>
 #include <iomanip>
 #include <iostream>
 #include <string>
 #include <string_view>
+
+#include "options.hpp"
+#include "visual.hpp"
 
 void Usage::help() noexcept {
 	constexpr std::size_t W = 28;

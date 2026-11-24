@@ -1,10 +1,10 @@
 #pragma once
 
-#include <visual/VectorVisualizer.hpp>
-
 #include <vector>
 
 #include <SFML/Graphics/RectangleShape.hpp>
+
+#include <visual/VectorVisualizer.hpp>
 
 class Bar final : public VectorVisualizer {
   private:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SortingAlgorithm.hpp"
+#include "sorts/SortingAlgorithm.hpp"
 
 class SelectionSort final : public SortingAlgorithm {
   public:

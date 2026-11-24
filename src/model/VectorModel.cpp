@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <numeric>
+#include <utility>
 
 VectorModel::VectorModel(std::size_t size) : _container(size), _markers(size, false) {
 	std::ranges::iota(_container, 0);

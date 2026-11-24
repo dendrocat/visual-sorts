@@ -1,11 +1,11 @@
 #pragma once
 
+#include <expected>
+#include <string>
+
 #include <macroses.hpp>
 
 #include <Options.hpp>
-
-#include <expected>
-#include <string>
 
 class Args final {
   public:

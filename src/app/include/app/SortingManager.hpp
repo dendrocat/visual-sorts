@@ -1,11 +1,11 @@
 #pragma once
 
+#include <memory>
+#include <thread>
+
 #include <model/SyncingModel.hpp>
 
 #include <sorts/Shuffler.hpp>
-
-#include <memory>
-#include <thread>
 
 class SortingManager final {
   private:
@@ -18,8 +18,6 @@ class SortingManager final {
 
 	void tryExecuteSorts(std::stop_token stoken) noexcept;
 	void executeSorts();
-	void shuffle();
-	void executeSort();
 
   public:
 	NO_COPY_MOVE(SortingManager);

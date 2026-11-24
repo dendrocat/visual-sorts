@@ -1,8 +1,8 @@
 #pragma once
 
-#include <VisualType.hpp>
-
 #include <string_view>
+
+#include <VisualType.hpp>
 
 namespace options
 {

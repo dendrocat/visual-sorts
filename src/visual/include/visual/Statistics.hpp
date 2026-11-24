@@ -1,14 +1,15 @@
 #pragma once
 
-#include <macroses.hpp>
-
-#include <FontNotFoundException.hpp>
-#include <model/VectorModel.hpp>
-
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
+
+#include <macroses.hpp>
+
+#include <FontNotFoundException.hpp>
+
+#include <model/VectorModel.hpp>
 
 class Statistics final : public sf::Drawable {
 	const VectorModel& _model;

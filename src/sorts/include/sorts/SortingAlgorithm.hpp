@@ -1,10 +1,10 @@
 #pragma once
 
+#include <string_view>
+
 #include <macroses.hpp>
 
 #include <model/SyncingModel.hpp>
-
-#include <string_view>
 
 class SortingAlgorithm {
   public:

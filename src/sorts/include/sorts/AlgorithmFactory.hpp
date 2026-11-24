@@ -1,11 +1,11 @@
 #pragma once
 
+#include <functional>
+#include <memory>
+
 #include <macroses.hpp>
 
 #include "SortingAlgorithm.hpp"
-
-#include <functional>
-#include <memory>
 
 class AlgorithmFactory {
   private:

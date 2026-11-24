@@ -20,7 +20,6 @@ target_link_libraries(App
 		Threads::Threads
 	PUBLIC
 		SFML::Graphics
-		Exceptions
 		Model
 		Sorts
 		Visual

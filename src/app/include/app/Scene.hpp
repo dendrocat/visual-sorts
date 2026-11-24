@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics/Drawable.hpp>
+
 #include <VisualType.hpp>
 
 #include <model/SyncingModel.hpp>
@@ -8,8 +10,6 @@
 #include <visual/VectorVisualizer.hpp>
 
 #include <app/SortingManager.hpp>
-
-#include <SFML/Graphics/Drawable.hpp>
 
 class Scene final : public sf::Drawable {
   private:

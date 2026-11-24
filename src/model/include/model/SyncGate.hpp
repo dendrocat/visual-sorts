@@ -1,10 +1,11 @@
 #pragma once
 
-#include <macroses.hpp>
-
 #include <condition_variable>
+#include <cstddef>
 #include <mutex>
 #include <stop_token>
+
+#include <macroses.hpp>
 
 class SyncGate final {
   private:

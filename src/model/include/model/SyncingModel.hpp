@@ -5,6 +5,9 @@
 #include <model/SyncGate.hpp>
 #include <model/VectorModel.hpp>
 
+#include <cstddef>
+#include <stop_token>
+
 class SyncingModel final {
   private:
 	VectorModel _model;

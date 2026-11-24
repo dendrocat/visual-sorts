@@ -1,11 +1,11 @@
 #pragma once
 
+#include <concepts>
+#include <string_view>
+
 #include <macroses.hpp>
 
 #include <Options.hpp>
-
-#include <concepts>
-#include <string_view>
 
 class ArgsValidator final {
 	template <std::integral TNum>

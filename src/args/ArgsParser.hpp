@@ -1,11 +1,11 @@
 #pragma once
 
+#include <string_view>
+
 #include <macroses.hpp>
 
 #include <Options.hpp>
 #include <VisualType.hpp>
-
-#include <string_view>
 
 class ArgsParser final {
 	static Options getDefaults();

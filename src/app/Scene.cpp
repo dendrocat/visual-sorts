@@ -1,8 +1,8 @@
 #include <app/Scene.hpp>
 
-#include <visual/VisualizerFactory.hpp>
-
 #include <string>
+
+#include <visual/VisualizerFactory.hpp>
 
 Scene::Scene(VisualType type, const std::size_t vectorSize, const std::size_t gateSteps)
 	: _model(std::make_shared<SyncingModel>(vectorSize, gateSteps)) {

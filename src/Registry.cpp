@@ -1,5 +1,7 @@
 #include "Registry.hpp"
 
+#include <memory>
+
 #include <sorts/AlgorithmFactory.hpp>
 
 #include <sorts/BubbleSort.hpp>
@@ -9,8 +11,6 @@
 #include <sorts/QuickSortLomuto.hpp>
 #include <sorts/QuickSortRandom.hpp>
 #include <sorts/SelectionSort.hpp>
-
-#include <memory>
 
 void Registry::registerAlgorithms(bool quadratic) {
 	auto& f = AlgorithmFactory::instance();

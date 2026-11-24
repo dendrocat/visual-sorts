@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SortingAlgorithm.hpp"
+#include "sorts/SortingAlgorithm.hpp"
 
 //TODO: Write BubbleSort xD
 class BubbleSort final : public SortingAlgorithm {

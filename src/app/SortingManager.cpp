@@ -1,10 +1,13 @@
 #include <app/SortingManager.hpp>
 
+#include <chrono>
+#include <functional>
+#include <iostream>
+#include <utility>
+
 #include <SortCanceledException.hpp>
 
 #include <sorts/AlgorithmFactory.hpp>
-
-#include <iostream>
 
 SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
 	: _model(std::move(model)) {

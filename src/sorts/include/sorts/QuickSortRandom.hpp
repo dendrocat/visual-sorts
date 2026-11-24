@@ -2,7 +2,7 @@
 
 #include <Random.hpp>
 
-#include "SortingAlgorithm.hpp"
+#include "sorts/SortingAlgorithm.hpp"
 
 class QuickSortRandom final : public SortingAlgorithm {
 	Random random;

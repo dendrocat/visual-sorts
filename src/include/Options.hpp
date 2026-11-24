@@ -1,8 +1,8 @@
 #pragma once
 
-#include "VisualType.hpp"
-
 #include <cstddef>
+
+#include "VisualType.hpp"
 
 struct Options {
 	bool help;

@@ -1,14 +1,13 @@
 #pragma once
 
-#include <macroses.hpp>
-
-#include <VisualType.hpp>
-
-#include "VectorVisualizer.hpp"
-
 #include <functional>
 #include <memory>
 #include <unordered_map>
+
+#include <macroses.hpp>
+#include <VisualType.hpp>
+
+#include <visual/VectorVisualizer.hpp>
 
 class VisualizerFactory {
   private:

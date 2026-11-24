@@ -1,10 +1,10 @@
 #pragma once
 
-#include <visual/VectorVisualizer.hpp>
-
 #include <vector>
 
 #include <SFML/Graphics/CircleShape.hpp>
+
+#include <visual/VectorVisualizer.hpp>
 
 class Ellipse final : public VectorVisualizer {
   private:

@@ -2,6 +2,7 @@
 
 #include <macroses.hpp>
 
+#include <cstddef>
 #include <vector>
 
 class VectorModel final {
