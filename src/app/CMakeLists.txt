@@ -9,22 +9,19 @@ target_sources(App
 		SortingManager.cpp
 	PUBLIC
 		FILE_SET HEADERS
-		BASE_DIRS include/app
+		BASE_DIRS include
 		FILES
 			include/app/Scene.hpp
 			include/app/SortingManager.hpp
 )
 
-target_include_directories(App
-	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
 target_link_libraries(App
 	PRIVATE
-		SFML::Graphics
 		Threads::Threads
+	PUBLIC
+		SFML::Graphics
 		Exceptions
+		Model
 		Sorts
 		Visual
 )

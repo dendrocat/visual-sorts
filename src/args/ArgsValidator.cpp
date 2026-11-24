@@ -1,8 +1,8 @@
 #include "ArgsValidator.hpp"
 
-#include "options.hpp"
+#include <args/ArgsErrors.hpp>
 
-#include "ArgsErrors.hpp"
+#include "options.hpp"
 
 template <std::integral TNum>
 void ArgsValidator::validateRange(const TNum& check, const TNum minValue,

@@ -1,6 +1,6 @@
 #include "ArgsParser.hpp"
 
-#include "ArgsErrors.hpp"
+#include <args/ArgsErrors.hpp>
 
 #include "options.hpp"
 #include "visual.hpp"

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "model/VectorModel.hpp"
+#include <model/VectorModel.hpp>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>

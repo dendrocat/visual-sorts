@@ -1,9 +1,9 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "FontNotFoundException.hpp"
-#include "model/VectorModel.hpp"
+#include <FontNotFoundException.hpp>
+#include <model/VectorModel.hpp>
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Font.hpp>

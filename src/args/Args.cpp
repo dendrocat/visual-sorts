@@ -1,6 +1,6 @@
-#include <Args.hpp>
+#include <args/Args.hpp>
 
-#include "ArgsErrors.hpp"
+#include <args/ArgsErrors.hpp>
 
 #include "ArgsParser.hpp"
 #include "ArgsValidator.hpp"

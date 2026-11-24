@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Random.hpp"
-#include "sorts/SortingAlgorithm.hpp"
+#include <Random.hpp>
+
+#include "SortingAlgorithm.hpp"
 
 class QuickSortRandom final : public SortingAlgorithm {
 	Random random;

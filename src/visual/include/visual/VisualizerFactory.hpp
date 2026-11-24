@@ -1,8 +1,8 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "VisualType.hpp"
+#include <VisualType.hpp>
 
 #include "VectorVisualizer.hpp"
 
@@ -15,22 +15,16 @@ class VisualizerFactory {
 	using Creator = std::function<std::unique_ptr<VectorVisualizer>(const VectorModel&)>;
 	std::unordered_map<VisualType, Creator> _registry;
 
-	VisualizerFactory() { }
+	void addVisual(VisualType type, Creator creator);
+	void init();
+
+	VisualizerFactory();
 
   public:
-	static VisualizerFactory& instance() {
-		static VisualizerFactory factory;
-		return factory;
-	}
+	static const VisualizerFactory& instance();
 
-	void addVisual(VisualType type, Creator creator) {
-		_registry.emplace(type, std::move(creator));
-	}
-
-	std::unique_ptr<VectorVisualizer> create(VisualType type, const VectorModel& model) {
-		if (!_registry.contains(type)) return nullptr;
-		return _registry[type](model);
-	}
+	std::unique_ptr<VectorVisualizer> create(VisualType         type,
+											 const VectorModel& model) const;
 
 	NO_COPY_MOVE(VisualizerFactory);
 };

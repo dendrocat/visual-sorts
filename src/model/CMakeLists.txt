@@ -10,15 +10,11 @@ target_sources(Model
 
 	PUBLIC
 		FILE_SET HEADERS
-		BASE_DIRS include/model
+		BASE_DIRS include
 		FILES
 			include/model/SyncGate.hpp
 			include/model/VectorModel.hpp
 			include/model/SyncingModel.hpp
 )
 
-target_include_directories(Model
-	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-target_link_libraries(Model PUBLIC Threads::Threads Exceptions)
+target_link_libraries(Model PUBLIC Threads::Threads Includes Exceptions)

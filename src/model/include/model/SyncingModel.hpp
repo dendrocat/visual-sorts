@@ -1,9 +1,9 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "SyncGate.hpp"
-#include "VectorModel.hpp"
+#include <model/SyncGate.hpp>
+#include <model/VectorModel.hpp>
 
 class SyncingModel final {
   private:

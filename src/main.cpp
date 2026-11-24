@@ -1,10 +1,12 @@
-#include "Options.hpp"
-#include "args/Args.hpp"
-#include "args/Usage.hpp"
+#include <VisualType.hpp>
+#include <Options.hpp>
+
+#include <args/Args.hpp>
+#include <args/Usage.hpp>
+
+#include <app/Scene.hpp>
 
 #include "Registry.hpp"
-
-#include "app/Scene.hpp"
 
 #include <SFML/Graphics.hpp>
 

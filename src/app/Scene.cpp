@@ -1,5 +1,6 @@
-#include "Scene.hpp"
-#include "visual/VisualizerFactory.hpp"
+#include <app/Scene.hpp>
+
+#include <visual/VisualizerFactory.hpp>
 
 #include <string>
 

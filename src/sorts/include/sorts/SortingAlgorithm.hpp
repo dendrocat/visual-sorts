@@ -1,8 +1,8 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "model/SyncingModel.hpp"
+#include <model/SyncingModel.hpp>
 
 #include <string_view>
 

@@ -13,8 +13,6 @@ target_include_directories(Exceptions
 		${CMAKE_SOURCE_DIR}/src/exceptions
 )
 
-link_libraries(Includes)
-
 add_subdirectory(args)
 add_subdirectory(model)
 add_subdirectory(sorts)
@@ -26,13 +24,9 @@ add_executable(main
 	Registry.cpp
 )
 
-target_include_directories(main
-	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
 target_link_libraries(main
-	PRIVATE 
-		SFML::Graphics 
+	PRIVATE
+		SFML::Graphics
 		Exceptions
 		Args
 		Model

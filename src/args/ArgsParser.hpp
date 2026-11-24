@@ -1,9 +1,9 @@
 #pragma once
 
-#include "macroses.hpp"
+#include <macroses.hpp>
 
-#include "Options.hpp"
-#include "VisualType.hpp"
+#include <Options.hpp>
+#include <VisualType.hpp>
 
 #include <string_view>
 

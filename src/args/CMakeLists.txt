@@ -9,15 +9,10 @@ target_sources(Args
 
 	PUBLIC
 		FILE_SET HEADERS
-		BASE_DIRS include/args
+		BASE_DIRS include
 		FILES
 			include/args/Usage.hpp
 			include/args/Args.hpp
 )
 
-target_include_directories(Args
-	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_link_libraries(Args PRIVATE Exceptions)
+target_link_libraries(Args PUBLIC Includes)

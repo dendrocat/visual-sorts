@@ -1,4 +1,4 @@
-#include "VectorModel.hpp"
+#include <model/VectorModel.hpp>
 
 #include <algorithm>
 #include <numeric>

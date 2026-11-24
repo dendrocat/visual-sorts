@@ -1,4 +1,4 @@
-#include "VectorVisualizer.hpp"
+#include <visual/VectorVisualizer.hpp>
 
 #include <algorithm>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VisualType.hpp"
+#include <VisualType.hpp>
 
 #include <string_view>
 
