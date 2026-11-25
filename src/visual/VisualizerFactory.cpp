@@ -5,14 +5,14 @@
 
 VisualizerFactory::VisualizerFactory() { init(); }
 
-void VisualizerFactory::addVisual(VisualType type, Creator creator) {
+void VisualizerFactory::addVisual(visual::VisualType type, Creator creator) {
 	_registry.emplace(type, std::move(creator));
 }
 
 void VisualizerFactory::init() {
-	addVisual(VisualType::Bar,
+	addVisual(visual::VisualType::Bar,
 			  [](const VectorModel& model) { return std::make_unique<Bar>(model); });
-	addVisual(VisualType::Ellipse,
+	addVisual(visual::VisualType::Ellipse,
 			  [](const VectorModel& model) { return std::make_unique<Ellipse>(model); });
 }
 
@@ -22,7 +22,7 @@ const VisualizerFactory& VisualizerFactory::instance() {
 }
 
 std::unique_ptr<VectorVisualizer>
-VisualizerFactory::create(VisualType type, const VectorModel& model) const {
+VisualizerFactory::create(visual::VisualType type, const VectorModel& model) const {
 	if (!_registry.contains(type)) return nullptr;
 	return _registry.at(type)(model);
 }

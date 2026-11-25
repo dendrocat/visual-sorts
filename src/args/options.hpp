@@ -26,7 +26,7 @@ inline constexpr std::size_t minGateSteps = 1;
 inline constexpr std::size_t maxGateSteps = 1000;
 inline constexpr std::size_t defaultGateSteps = 5;
 
-inline constexpr VisualType defaultType = VisualType::Bar;
+inline constexpr visual::VisualType defaultType = visual::VisualType::Bar;
 
 inline constexpr bool defaultQuadratic = false;
 

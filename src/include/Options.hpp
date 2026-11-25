@@ -11,7 +11,7 @@ struct Options {
 	std::size_t vectorSize;
 	std::size_t gateSteps;
 
-	VisualType type;
+	visual::VisualType type;
 
 	bool quadratic;
 };

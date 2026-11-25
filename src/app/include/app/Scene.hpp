@@ -21,7 +21,7 @@ class Scene final : public sf::Drawable {
 	std::unique_ptr<SortingManager> _sorting;
 
   public:
-	Scene(VisualType type, const std::size_t vectorSize, const std::size_t gateSteps);
+	Scene(visual::VisualType type, const std::size_t vectorSize, const std::size_t gateSteps);
 	NO_COPY_MOVE(Scene);
 
 	void setSize(sf::Vector2u windowSize);

@@ -10,8 +10,8 @@
 class ArgsParser final {
 	static Options getDefaults();
 
-	static VisualType  parseType(std::string_view sv);
-	static std::size_t parseSizeT(std::string_view sv);
+	static visual::VisualType parseType(std::string_view sv);
+	static std::size_t  parseSizeT(std::string_view sv);
 
   public:
 	NO_CREATE(ArgsParser);

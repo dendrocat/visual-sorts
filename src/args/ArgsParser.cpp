@@ -18,8 +18,8 @@ Options ArgsParser::getDefaults() {
 				   options::defaultQuadratic};
 }
 
-VisualType ArgsParser::parseType(std::string_view sv) {
-	VisualType type;
+visual::VisualType ArgsParser::parseType(std::string_view sv) {
+	visual::VisualType type;
 	if (!visual::tryParseVisual(sv, type))
 		throw ParseError("Visual '" + std::string(sv) + "' doesn't supported");
 	return type;

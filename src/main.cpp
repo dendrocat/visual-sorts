@@ -30,7 +30,7 @@ int main(const int argc, const char* argv[]) {
 		if (options.list) Usage::list();
 		return 0;
 	}
-	VisualType  type = options.type;
+	visual::VisualType  type = options.type;
 	std::size_t vectorSize = options.vectorSize;
 	std::size_t gateSteps = options.gateSteps;
 	bool        quadratic = options.quadratic;

@@ -4,7 +4,7 @@
 
 #include <visual/VisualizerFactory.hpp>
 
-Scene::Scene(VisualType type, const std::size_t vectorSize, const std::size_t gateSteps)
+Scene::Scene(visual::VisualType type, const std::size_t vectorSize, const std::size_t gateSteps)
 	: _model(std::make_shared<SyncingModel>(vectorSize, gateSteps)) {
 	_sorting = std::make_unique<SortingManager>(_model);
 
