@@ -1,34 +1,39 @@
-#include "args/Args.hpp"
-#include "args/Usage.hpp"
-
-#include "Registry.hpp"
-#include "visual.hpp"
-
-#include "Scene.hpp"
+#include <iostream>
+#include <string_view>
 
 #include <SFML/Graphics.hpp>
+
+#include <VisualType.hpp>
+#include <Options.hpp>
+
+#include <args/Args.hpp>
+#include <args/Usage.hpp>
+
+#include <app/Scene.hpp>
+
+#include "Registry.hpp"
 
 void printError(const std::string_view sv) {
 	std::cerr << "\033[31m" << sv << "\033[0m\n";
 }
 
 int main(const int argc, const char* argv[]) {
-	auto expectedArgs = Args::parse(argc, argv);
-	if (!expectedArgs) {
-		printError(expectedArgs.error().message);
+	auto expectedOptions = Args::parse(argc, argv);
+	if (!expectedOptions) {
+		printError(expectedOptions.error());
 		return 1;
 	}
-	const Args& args = expectedArgs.value();
+	const Options& options = expectedOptions.value();
 
-	if (args.help() || args.list()) {
-		if (args.help()) Usage::help();
-		if (args.list()) Usage::list();
+	if (options.help || options.list) {
+		if (options.help) Usage::help();
+		if (options.list) Usage::list();
 		return 0;
 	}
-	visual::Type type = args.type();
-	std::size_t  vectorSize = args.vectorSize();
-	std::size_t  gateSteps = args.gateSteps();
-	bool         quadratic = args.quadratic();
+	visual::VisualType  type = options.type;
+	std::size_t vectorSize = options.vectorSize;
+	std::size_t gateSteps = options.gateSteps;
+	bool        quadratic = options.quadratic;
 
 	Registry::init(quadratic);
 

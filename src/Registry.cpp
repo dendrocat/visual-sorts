@@ -1,21 +1,16 @@
 #include "Registry.hpp"
 
-#include "sorts/AlgorithmFactory.hpp"
-
-#include "sorts/BubbleSort.hpp"
-#include "sorts/MergeSort.hpp"
-#include "sorts/QuickSortDualPivot.hpp"
-#include "sorts/QuickSortHoare.hpp"
-#include "sorts/QuickSortLomuto.hpp"
-#include "sorts/QuickSortRandom.hpp"
-#include "sorts/SelectionSort.hpp"
-
-#include "visual/VisualizerFactory.hpp"
-
-#include "visual/Bar.hpp"
-#include "visual/Ellipse.hpp"
-
 #include <memory>
+
+#include <sorts/AlgorithmFactory.hpp>
+
+#include <sorts/BubbleSort.hpp>
+#include <sorts/MergeSort.hpp>
+#include <sorts/QuickSortDualPivot.hpp>
+#include <sorts/QuickSortHoare.hpp>
+#include <sorts/QuickSortLomuto.hpp>
+#include <sorts/QuickSortRandom.hpp>
+#include <sorts/SelectionSort.hpp>
 
 void Registry::registerAlgorithms(bool quadratic) {
 	auto& f = AlgorithmFactory::instance();
@@ -31,17 +26,6 @@ void Registry::registerAlgorithms(bool quadratic) {
 	f.addAlgorithm([]() { return std::make_unique<QuickSortDualPivot>(); });
 }
 
-void Registry::registerVisuals() {
-	auto& f = VisualizerFactory::instance();
-
-	f.addVisual(visual::Type::Bar,
-				[](const VectorModel& model) { return std::make_unique<Bar>(model); });
-	f.addVisual(visual::Type::Ellipse, [](const VectorModel& model) {
-		return std::make_unique<Ellipse>(model);
-	});
-}
-
 void Registry::init(bool quadratic) {
 	registerAlgorithms(quadratic);
-	registerVisuals();
 }

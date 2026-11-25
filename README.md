@@ -37,18 +37,18 @@
 - **QuickSort с двумя опорными элементами**
 
 Чтобы подключить алгоритм, добавьте соответствующий вызов `f.addAlgorithm(...)`
-в `src/registery.cpp`.
+в `src/Registry.cpp`.
 
 ## Визуализации
 
-- **`bar`** - классические столбцы, высота соответствует значению.
-- **`ellipse`** - точки на эллипсе: угол зависит от позиции элемента в массиве,
+- **`Bar`** - классические столбцы, высота соответствует значению.
+- **`Ellipse`** - точки на эллипсе: угол зависит от позиции элемента в массиве,
   а расстояние до центра - от отклонения текущего значения от изначального.
 
 Активная визуализация задаётся через парамерты `-t`/`--type` при запуске приложения:
 
 ```bash
-./build/debug/main -t bar
+./build/debug/main -t Bar
 ```
 
 ## Требования
@@ -76,29 +76,18 @@ constexpr auto font =
 
 ## Сборка и запуск
 
-```bash
-# сборка и запуск в режиме Debug
-make debug
-
-# сборка и запуск в режиме Release
-make release
-
-# удалить каталог build/
-make clean
-```
-
 Либо напрямую через CMake:
 
 ```bash
-cmake -S . -B build/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
-cmake --build build/debug --target main
+cmake --preset debug
+cmake --build --preset debug --target main
+
 ./build/debug/main
 ```
 
-Приложение открывает окно размером 80% от разрешения экрана. Закройте окно, чтобы
-завершить работу; поток сортировки будет остановлен через `std::stop_token`.
-
 ## Тесты
+
+> CTest in plans
 
 Тесты проверяют корректность сортировки, которая указывается через директиву
 `using Sorter` в начале `namespace test`, на массивах разного размера
@@ -106,14 +95,9 @@ cmake --build build/debug --target main
 синхронизация при этом не блокирует выполнение.
 
 ```bash
-make test
-```
+cmake --preset debug
+cmake --build --preset debug --target test
 
-Либо напрямую через CMake:
-
-```bash
-cmake -S . -B build/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
-cmake --build build/debug --target test
 ./build/debug/test
 ```
 
@@ -126,61 +110,67 @@ cmake --build build/debug --target test
 | -h, --help  | Show help                                         |
 | -l, --list  | Show available visualisation types                |
 | -t, --type  | Set visualisation type (default: bar)             |
-| -s, --size  | Set array size \[10, 100000\] (default: 1000)     |
-| -t, --type  | Set operations per frame \[1, 1000\] (default: 5) |
+| -s, --size  | Set array size [10, 100000] (default: 1000)     |
+| -t, --type  | Set operations per frame [1, 1000] (default: 5) |
 | --quadratic | Enable quadtatic sorts (default: false)           |
 
 ## Архитектура
 
 ```
 src/
-├── main.cpp                 # точка входа, создание окна и сцены
-├── registery.cpp/.hpp       # регистрация алгоритмов и визуализаций
-├── Scene.cpp/.hpp           # связывает модель, сортировку и отрисовку
-├── Random.hpp               # обёртка над std::mt19937
-├── test.cpp                 # тесты сортировки
+├── main.cpp                        # точка входа, создание окна и сцены
+├── Registry                        # регистрация алгоритмов
+├── include/
+│   ├── macroses.hpp                # общепроектные макросы
+│   ├── Random.hpp                  # обёртка над std::mt19937
+│   ├── Options.hpp                 # структура со всеми доступными CLI-аргументами
+│   └── VisualType                  # enum со всеми доступными типами визуализаций
+├── exceptions/                     # исключения
+│   └── SortCanceledException.hpp   # ошибки парсинга `ParseError` и валидации `ValidationError`
+│   └── FontNotFoundException.hpp   # ошибки парсинга `ParseError` и валидации `ValidationError`
+├── args/
+│   ├── options.hpp                 # дефолтные и ограничительные значения Options и вспомогательные функции
+│   ├── visual.hpp                  # вспомогательные функции для VisualType
+│   ├── ArgsParser                  # парсер CLI-аргументов
+│   ├── ArgsValidator               # валидатор численных значений
+│   ├── Args                        # фасад над ArgsParser и ArgsValidator
+│   └── Usage                       # вспомогательные класс для печати при аргументах `--help` и `--list`
 ├── model/
-│   ├── VectorModel          # массив, маркеры изменённых элементов, счётчики
-│   ├── SyncGate             # синхронизация потока сортировки и отрисовки
-│   └── SyncingModel         # фасад над VectorModel и SyncGate
+│   ├── VectorModel                 # массив, маркеры изменённых элементов, счётчики
+│   ├── SyncGate                    # синхронизация потока сортировки и отрисовки
+│   └── SyncingModel                # фасад над VectorModel и SyncGate
 ├── sorts/
-│   ├── SortingAlgorithm.hpp # интерфейс алгоритма
-│   ├── AlgorithmFactory     # реестр алгоритмов
-│   ├── SortingManager       # поток, перемешивание и запуск алгоритмов
-│   ├── Shuffler             # перемешивание Фишера - Йетса
-│   └── *Sort.hpp            # реализации алгоритмов
+│   ├── SortingAlgorithm.hpp        # интерфейс алгоритма
+│   ├── AlgorithmFactory            # реестр алгоритмов
+│   ├── Shuffler                    # перемешивание Фишера - Йетса
+│   └── *Sort.hpp                   # реализации алгоритмов
 ├── visual/
-│   ├── VectorVisualizer     # базовый класс визуализации
-│   ├── VisualizerFactory    # реестр визуализаций
-│   ├── Bar                  # визуализация столбцами
-│   ├── Ellipse              # визуализация точками на эллипсе
-│   └── Statistics.hpp       # текстовая статистика поверх сцены
-└── exceptions/              # исключения
-    └── ArgsErrors.hpp      # ошибки парсинга `ParseError` и валидации `ValidationError`
+│   ├── VisualizerFactory           # реестр визуализаций
+│   ├── VectorVisualizer            # базовый класс визуализации
+│   ├── Bar                         # визуализация столбцами
+│   ├── Ellipse                     # визуализация точками на эллипсе
+│   └── Statistics.hpp              # текстовая статистика визуализации
+└── app/                            # приложение
+    ├── SortingManager              # поток, перемешивание и запуск алгоритмов
+    └── Scene                       # сцена, отображаемая приложением во время работы
+tests/
+└── test.cpp                        # тесты сортировки
 ```
 
 ### Как это работает
 
-1. `VectorModel` хранит массив значений `0..N-1`, флаги изменённых элементов и счётчики
-   сравнений, записей и обменов.
-2. `SyncingModel` перехватывает операции `compare`, `set` и `swap`. Перед каждой операцией
-   вызывается `SyncGate::check()`.
-3. `SyncGate` пропускает `gateSteps` операций, после чего блокирует поток сортировки до
-   следующего кадра. `Scene::update()` на время отрисовки вызывает `lock()`, а после -
-   `unlock()`, тем самым задавая темп визуализации.
-4. `SortingManager` запускает `std::jthread`. В нём массив перемешивается, затем по очереди
-   выполняются все алгоритмы из `AlgorithmFactory` с паузой в 2 секунды между этапами.
-5. Визуализатор в `update()` читает только помеченные (`markered`) элементы и обновляет их
-   положение; `clearMarkers()` сбрасывает флаги после каждого кадра.
-6. Поток сортировки можно остановить через `std::stop_token`: `SyncGate` выбрасывает
-   `SortCanceledException`, который перехватывается в `SortingManager`.
+1. `VectorModel` хранит массив значений `0..N-1`, флаги изменённых элементов и счётчики сравнений, записей и обменов.
+2. `SyncingModel` перехватывает операции `compare`, `set` и `swap`. Перед каждой операцией вызывается `SyncGate::check()`.
+3. `SyncGate` пропускает `gateSteps` операций, после чего блокирует поток сортировки до следующего кадра. `Scene::update()` на время отрисовки вызывает `lock()`, а после - `unlock()`, тем самым задавая темп визуализации.
+4. `SortingManager` запускает `std::jthread`. В нём массив перемешивается, затем по очереди выполняются все алгоритмы из `AlgorithmFactory` с паузой в 2 секунды между этапами.
+5. Визуализатор в `update()` читает только помеченные (`markered`) элементы и обновляет их положение; `clearMarkers()` сбрасывает флаги после каждого кадра.
+6. Поток сортировки можно остановить через `std::stop_token`: `SyncGate` выбрасывает `SortCanceledException`, который перехватывается в `SortingManager`.
 
 ## Добавление своего алгоритма
 
 1. Создайте заголовочный файл в `src/sorts/`, например `MySort.hpp`.
 2. Унаследуйте класс от `SortingAlgorithm` и реализуйте методы `name()` и `sort()`.
-   В `sort()` используйте только операции `SyncingModel`: `get`, `compare`, `set`, `swap`,
-   чтобы работали и визуализация, и статистика.
+   В `sort()` используйте только операции `SyncingModel`: `get`, `compare`, `set`, `swap`, чтобы работали и визуализация, и статистика.
 
 ```cpp
 #pragma once
@@ -197,7 +187,7 @@ class MySort final : public SortingAlgorithm {
 };
 ```
 
-3. Подключите заголовок и зарегистрируйте алгоритм в `src/registery.cpp`:
+3. Подключите заголовок и зарегистрируйте алгоритм в `src/Registry.cpp`:
 
 ```cpp
 #include "sorts/MySort.hpp"
@@ -213,19 +203,23 @@ void registerAlgorithms() {
 
 1. Унаследуйте класс от `VectorVisualizer`.
 2. Реализуйте `onSetSize()`, `onDraw()` и `update()`.
-3. Зарегистрируйте визуализацию в `src/registery.cpp`:
+3. Добавьте новый тип визуализации в `src/include/VisualType.hpp`:
 
 ```cpp
-void registerVisuals() {
-	auto& f = VisualizerFactory::instance();
-
-	f.addVisual("myvisual", [](const VectorModel& model) {
-		return std::make_unique<MyVisual>(model);
-	});
-}
+#define VISUAL_TYPES(X) \
+	X(Bar)              \
+	X(Ellipse)          \
+	X(MyVisual)
 ```
 
-4. Передайте имя визуализации в `Scene` в `src/main.cpp`.
+4. Зарегистрируйте визуализацию в `src/visual/VisualizerFactory.cpp`:
+
+```cpp
+void VisualizerFactory::init() {
+	addVisual(visual::VisualType::MyVisual,
+			  [](const VectorModel& model) { return std::make_unique<MyVisual>(model); });
+}
+```
 
 ## Благодарности
 

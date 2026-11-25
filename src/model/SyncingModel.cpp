@@ -1,4 +1,4 @@
-#include "SyncingModel.hpp"
+#include <model/SyncingModel.hpp>
 
 SyncingModel::SyncingModel(const std::size_t size, const std::size_t gateSteps)
 	: _model(size), _gate(gateSteps) { }

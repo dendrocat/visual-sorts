@@ -1,0 +1,22 @@
+#pragma once
+
+#include "sorts/SortingAlgorithm.hpp"
+
+//TODO: Write BubbleSort xD
+class BubbleSort final : public SortingAlgorithm {
+  public:
+	const std::string_view name() override { return "BubbleSort"; }
+
+	void sort(std::shared_ptr<SyncingModel> model) override {
+		for (std::size_t i = model->size(); i >= 1; --i) {
+			auto max = model->get(i - 1);
+			auto idx_max = i - 1;
+			for (std::size_t j = 0; j < i; ++j) {
+				if (model->compare(model->get(j), max)) continue;
+				max = model->get(j);
+				idx_max = j;
+			}
+			model->swap(i - 1, idx_max);
+		}
+	}
+};

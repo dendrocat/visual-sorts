@@ -1,41 +1,53 @@
 #include "ArgsParser.hpp"
 
-#include "exceptions/ArgsErrors.hpp"
+#include <args/ArgsErrors.hpp>
+
+#include "options.hpp"
+#include "visual.hpp"
 
 #include <charconv>
-#include <iostream>
 #include <string>
-#include <utility>
+#include <unordered_set>
 
-template <typename T>
-void ArgsParser::setOnce(std::optional<T>& field, T&& value, std::string_view opt) {
-	if (field.has_value())
-		throw ParseError("Duplicated option '" + std::string(opt) + "'");
-	field = std::forward<T>(value);
+Options ArgsParser::getDefaults() {
+	return Options{.help = false,
+				   .list = false,
+				   .vectorSize = options::defaultVectorSize,
+				   .gateSteps = options::defaultGateSteps,
+				   .type = options::defaultType,
+				   .quadratic = options::defaultQuadratic};
 }
 
-visual::Type ArgsParser::parseType(std::string_view sv) {
-	visual::Type type;
+visual::VisualType ArgsParser::parseType(std::string_view sv) {
+	visual::VisualType type;
 	if (!visual::tryParseVisual(sv, type))
 		throw ParseError("Visual '" + std::string(sv) + "' doesn't supported");
 	return type;
 }
 
 std::size_t ArgsParser::parseSizeT(std::string_view sv) {
-	int res;
+	std::size_t res;
 	auto [ptr, ec] = std::from_chars(sv.begin(), sv.end(), res);
 
 	if (ec == std::errc::invalid_argument)
 		throw ParseError("Not a number: '" + std::string(sv) + "'");
 	if (ec == std::errc::result_out_of_range)
 		throw ParseError("Number out of range: '" + std::string(sv) + "'");
-	if (ptr != sv.end() || res < 0)
+	if (ptr != sv.end())
 		throw ParseError("Trailing characters in number: '" + std::string(sv) + "'");
-	return static_cast<std::size_t>(res);
+	return res;
 }
 
-options::Options ArgsParser::parse(const int argc, const char* argv[]) {
-	options::Options options;
+Options ArgsParser::parse(const int argc, const char* argv[]) {
+	Options options = getDefaults();
+
+	std::unordered_set<options::Sense> was;
+	auto once = [&was](const options::Sense& sense, const std::string_view sv) {
+		if (was.contains(sense))
+			throw ParseError("Duplicated option: '" + std::string(sv) + "'");
+		was.insert(sense);
+	};
+
 	for (int i = 1; i < argc; ++i) {
 		const std::string_view arg = argv[i];
 
@@ -49,24 +61,26 @@ options::Options ArgsParser::parse(const int argc, const char* argv[]) {
 			++i;
 		}
 
+		once(optionSpec->sense, arg);
+
 		switch (optionSpec->sense) {
 		case options::Sense::Help:
-			setOnce(options.help, true, arg);
+			options.help = true;
 			break;
 		case options::Sense::List:
-			setOnce(options.list, true, arg);
+			options.list = true;
 			break;
 		case options::Sense::Quadratic:
-			setOnce(options.quadratic, true, arg);
+			options.quadratic = true;
 			break;
 		case options::Sense::Type:
-			setOnce(options.type, parseType(argv[i]), arg);
+			options.type = parseType(argv[i]);
 			break;
 		case options::Sense::Size:
-			setOnce(options.vectorSize, parseSizeT(argv[i]), arg);
+			options.vectorSize = parseSizeT(argv[i]);
 			break;
 		case options::Sense::Gate:
-			setOnce(options.gateSteps, parseSizeT(argv[i]), arg);
+			options.gateSteps = parseSizeT(argv[i]);
 			break;
 		}
 		if (options.help || options.list) break;

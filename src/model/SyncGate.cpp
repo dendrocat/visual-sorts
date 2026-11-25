@@ -1,5 +1,6 @@
-#include "SyncGate.hpp"
-#include "exceptions/SortCanceledException.hpp"
+#include <model/SyncGate.hpp>
+
+#include <SortCanceledException.hpp>
 
 SyncGate::SyncGate(std::size_t maxSteps) : _maxSteps(maxSteps), _steps(maxSteps) { }
 
