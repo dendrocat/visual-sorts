@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.22)
 
 #TODO: Add prebuilding SFML
 #TODO: Add option for builing to one file without links
-#TODO: Try to minimize count of build systems
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -15,7 +14,7 @@ set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_compile_options( -Wall -Wextra -Wpedantic -pedantic-errors -Werror)
+add_compile_options(-Wall -Wextra -Wpedantic -pedantic-errors -Werror)
 
 option(BUILD_TESTS "Build tests" OFF)
 

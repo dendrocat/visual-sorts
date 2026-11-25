@@ -1,5 +1,7 @@
 #include "ArgsValidator.hpp"
 
+#include <string>
+
 #include <args/ArgsErrors.hpp>
 
 #include "options.hpp"

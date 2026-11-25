@@ -10,12 +10,12 @@
 #include <unordered_set>
 
 Options ArgsParser::getDefaults() {
-	return Options{false,
-				   false,
-				   options::defaultVectorSize,
-				   options::defaultGateSteps,
-				   options::defaultType,
-				   options::defaultQuadratic};
+	return Options{.help = false,
+				   .list = false,
+				   .vectorSize = options::defaultVectorSize,
+				   .gateSteps = options::defaultGateSteps,
+				   .type = options::defaultType,
+				   .quadratic = options::defaultQuadratic};
 }
 
 visual::VisualType ArgsParser::parseType(std::string_view sv) {
