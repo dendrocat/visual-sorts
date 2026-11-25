@@ -1,5 +1,3 @@
-find_package(SFML 3 REQUIRED COMPONENTS Graphics)
-
 add_library(Visual STATIC)
 
 target_sources(Visual

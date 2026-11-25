@@ -37,7 +37,7 @@
 - **QuickSort с двумя опорными элементами**
 
 Чтобы подключить алгоритм, добавьте соответствующий вызов `f.addAlgorithm(...)`
-в `src/registery.cpp`.
+в `src/Registry.cpp`.
 
 ## Визуализации
 
@@ -110,50 +110,51 @@ cmake --build --preset debug --target test
 | -h, --help  | Show help                                         |
 | -l, --list  | Show available visualisation types                |
 | -t, --type  | Set visualisation type (default: bar)             |
-| -s, --size  | Set array size \[10, 100000\] (default: 1000)     |
-| -t, --type  | Set operations per frame \[1, 1000\] (default: 5) |
+| -s, --size  | Set array size [10, 100000] (default: 1000)     |
+| -t, --type  | Set operations per frame [1, 1000] (default: 5) |
 | --quadratic | Enable quadtatic sorts (default: false)           |
 
 ## Архитектура
 
 ```
 src/
-├── main.cpp                    # точка входа, создание окна и сцены
-├── Registry                    # регистрация алгоритмов
+├── main.cpp                        # точка входа, создание окна и сцены
+├── Registry                        # регистрация алгоритмов
 ├── include/
-│   ├── macroses.hpp            # общепроектные макросы
-│   ├── Random.hpp              # обёртка над std::mt19937
-│   ├── Options.hpp             # структура со всеми доступными CLI-аргументами
-│   └── VisualType              # enum со всеми доступными типами визуализаций
-├── exceptions/                 # исключения
-│   └── ArgsErrors.hpp          # ошибки парсинга `ParseError` и валидации `ValidationError`
+│   ├── macroses.hpp                # общепроектные макросы
+│   ├── Random.hpp                  # обёртка над std::mt19937
+│   ├── Options.hpp                 # структура со всеми доступными CLI-аргументами
+│   └── VisualType                  # enum со всеми доступными типами визуализаций
+├── exceptions/                     # исключения
+│   └── SortCanceledException.hpp   # ошибки парсинга `ParseError` и валидации `ValidationError`
+│   └── FontNotFoundException.hpp   # ошибки парсинга `ParseError` и валидации `ValidationError`
 ├── args/
-│   ├── options.hpp             # дефолтные и ограничительные значения Options и вспомогательные функции
-│   ├── visual.hpp              # вспомогательные функции для VisualType
-│   ├── ArgsParser              # парсер CLI-аргументов
-│   ├── ArgsValidator           # валидатор численных значений
-│   ├── Args                    # фасад над ArgsParser и ArgsValidator
-│   └── Usage                   # вспомогательные класс для печати при аргументах `--help` и `--list`
+│   ├── options.hpp                 # дефолтные и ограничительные значения Options и вспомогательные функции
+│   ├── visual.hpp                  # вспомогательные функции для VisualType
+│   ├── ArgsParser                  # парсер CLI-аргументов
+│   ├── ArgsValidator               # валидатор численных значений
+│   ├── Args                        # фасад над ArgsParser и ArgsValidator
+│   └── Usage                       # вспомогательные класс для печати при аргументах `--help` и `--list`
 ├── model/
-│   ├── VectorModel             # массив, маркеры изменённых элементов, счётчики
-│   ├── SyncGate                # синхронизация потока сортировки и отрисовки
-│   └── SyncingModel            # фасад над VectorModel и SyncGate
+│   ├── VectorModel                 # массив, маркеры изменённых элементов, счётчики
+│   ├── SyncGate                    # синхронизация потока сортировки и отрисовки
+│   └── SyncingModel                # фасад над VectorModel и SyncGate
 ├── sorts/
-│   ├── SortingAlgorithm.hpp    # интерфейс алгоритма
-│   ├── AlgorithmFactory        # реестр алгоритмов
-│   ├── Shuffler                # перемешивание Фишера - Йетса
-│   └── *Sort.hpp               # реализации алгоритмов
+│   ├── SortingAlgorithm.hpp        # интерфейс алгоритма
+│   ├── AlgorithmFactory            # реестр алгоритмов
+│   ├── Shuffler                    # перемешивание Фишера - Йетса
+│   └── *Sort.hpp                   # реализации алгоритмов
 ├── visual/
-│   ├── VisualizerFactory       # реестр визуализаций
-│   ├── VectorVisualizer        # базовый класс визуализации
-│   ├── Bar                     # визуализация столбцами
-│   ├── Ellipse                 # визуализация точками на эллипсе
-│   └── Statistics.hpp          # текстовая статистика визуализации
-└── app/                        # приложение
-    ├── SortingManager          # поток, перемешивание и запуск алгоритмов
-    └── Scene                   # сцена, отображаемая приложением во время работы
+│   ├── VisualizerFactory           # реестр визуализаций
+│   ├── VectorVisualizer            # базовый класс визуализации
+│   ├── Bar                         # визуализация столбцами
+│   ├── Ellipse                     # визуализация точками на эллипсе
+│   └── Statistics.hpp              # текстовая статистика визуализации
+└── app/                            # приложение
+    ├── SortingManager              # поток, перемешивание и запуск алгоритмов
+    └── Scene                       # сцена, отображаемая приложением во время работы
 tests/
-└── test.cpp                 # тесты сортировки
+└── test.cpp                        # тесты сортировки
 ```
 
 ### Как это работает

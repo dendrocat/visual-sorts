@@ -1,5 +1,3 @@
-find_package(Threads REQUIRED)
-
 add_library(Model STATIC)
 
 target_sources(Model

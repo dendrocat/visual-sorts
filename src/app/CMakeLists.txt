@@ -1,6 +1,3 @@
-find_package(SFML 3 REQUIRED COMPONENTS Graphics)
-find_package(Threads REQUIRED)
-
 add_library(App STATIC)
 
 target_sources(App
