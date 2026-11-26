@@ -3,6 +3,7 @@
 #include <cstddef>
 
 #include "VisualType.hpp"
+#include "Complexity.hpp"
 
 struct Options {
 	bool help;
@@ -13,5 +14,5 @@ struct Options {
 
 	visual::VisualType type;
 
-	bool quadratic;
+	sorts::Complexity complexity;
 };

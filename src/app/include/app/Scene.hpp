@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
+#include <Complexity.hpp>
 #include <VisualType.hpp>
 
 #include <model/SyncingModel.hpp>
@@ -13,7 +14,7 @@
 
 class Scene final : public sf::Drawable {
   private:
-	std::shared_ptr<SyncingModel> _model;
+	std::unique_ptr<SyncingModel> _model;
 
 	std::unique_ptr<Statistics>       _stat;
 	std::unique_ptr<VectorVisualizer> _visual;
@@ -21,7 +22,8 @@ class Scene final : public sf::Drawable {
 	std::unique_ptr<SortingManager> _sorting;
 
   public:
-	Scene(visual::VisualType type, const std::size_t vectorSize, const std::size_t gateSteps);
+	Scene(const visual::VisualType type, const std::size_t vectorSize,
+		  const std::size_t gateSteps, const sorts::Complexity complexity);
 	NO_COPY_MOVE(Scene);
 
 	void setSize(sf::Vector2u windowSize);

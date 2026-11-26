@@ -10,12 +10,12 @@
 #include <unordered_set>
 
 Options ArgsParser::getDefaults() {
-	return Options{.help = false,
-				   .list = false,
-				   .vectorSize = options::defaultVectorSize,
-				   .gateSteps = options::defaultGateSteps,
-				   .type = options::defaultType,
-				   .quadratic = options::defaultQuadratic};
+	return Options{ .help = false,
+					.list = false,
+					.vectorSize = options::defaultVectorSize,
+					.gateSteps = options::defaultGateSteps,
+					.type = options::defaultType,
+					.complexity = options::defaultComplexity };
 }
 
 visual::VisualType ArgsParser::parseType(std::string_view sv) {
@@ -70,8 +70,14 @@ Options ArgsParser::parse(const int argc, const char* argv[]) {
 		case options::Sense::List:
 			options.list = true;
 			break;
-		case options::Sense::Quadratic:
-			options.quadratic = true;
+		case options::Sense::NoLinear:
+			options.complexity &= ~sorts::Complexity::Linear;
+			break;
+		case options::Sense::NoNLogN:
+			options.complexity &= ~sorts::Complexity::NLogN;
+			break;
+		case options::Sense::NoQuad:
+			options.complexity &= ~sorts::Complexity::Quad;
 			break;
 		case options::Sense::Type:
 			options.type = parseType(argv[i]);

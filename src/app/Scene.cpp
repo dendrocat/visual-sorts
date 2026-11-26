@@ -4,19 +4,20 @@
 
 #include <visual/VisualizerFactory.hpp>
 
-Scene::Scene(visual::VisualType type, const std::size_t vectorSize, const std::size_t gateSteps)
-	: _model(std::make_shared<SyncingModel>(vectorSize, gateSteps)) {
-	_sorting = std::make_unique<SortingManager>(_model);
+Scene::Scene(const visual::VisualType type, const std::size_t vectorSize,
+			 const std::size_t gateSteps, const sorts::Complexity complexity)
+	: _model(std::make_unique<SyncingModel>(vectorSize, gateSteps)) {
+	_sorting = std::make_unique<SortingManager>(*_model, complexity);
 
 	_stat = std::make_unique<Statistics>(_model->container());
 	_visual = VisualizerFactory::instance().create(type, _model->container());
 }
 
 void Scene::setSize(sf::Vector2u windowSize) {
-	_visual->setSize({windowSize.x * 0.90f, windowSize.y * 0.90f});
-	_visual->setPosition({windowSize.x / 2.0f, windowSize.y / 2.0f});
+	_visual->setSize({ windowSize.x * 0.90f, windowSize.y * 0.90f });
+	_visual->setPosition({ windowSize.x / 2.0f, windowSize.y / 2.0f });
 
-	_stat->setPosition({windowSize.x * 0.01f, windowSize.y * 0.01f});
+	_stat->setPosition({ windowSize.x * 0.01f, windowSize.y * 0.01f });
 	_stat->setSize(24);
 }
 

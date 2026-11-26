@@ -21,7 +21,6 @@ add_subdirectory(app)
 
 add_executable(main
 	main.cpp
-	Registry.cpp
 )
 
 target_link_libraries(main

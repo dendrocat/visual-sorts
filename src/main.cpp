@@ -11,8 +11,6 @@
 
 #include <app/Scene.hpp>
 
-#include "Registry.hpp"
-
 void printError(const std::string_view sv) {
 	std::cerr << "\033[31m" << sv << "\033[0m\n";
 }
@@ -33,9 +31,6 @@ int main(const int argc, const char* argv[]) {
 	visual::VisualType  type = options.type;
 	std::size_t vectorSize = options.vectorSize;
 	std::size_t gateSteps = options.gateSteps;
-	bool        quadratic = options.quadratic;
-
-	Registry::init(quadratic);
 
 	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
 	mode.size = mode.size * 80u / 100u;
@@ -46,7 +41,7 @@ int main(const int argc, const char* argv[]) {
 	// TODO: remove hardcoded parameters
 	constexpr auto font = "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf";
 
-	Scene scene{type, vectorSize, gateSteps};
+	Scene scene{type, vectorSize, gateSteps, options.complexity};
 	scene.setSize(mode.size);
 	scene.setFont(font);
 	scene.start();

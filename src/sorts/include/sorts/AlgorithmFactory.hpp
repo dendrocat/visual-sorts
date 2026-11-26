@@ -5,27 +5,36 @@
 
 #include <macroses.hpp>
 
+#include <Complexity.hpp>
+
 #include "SortingAlgorithm.hpp"
+
+namespace sorts
+{
 
 class AlgorithmFactory {
   private:
 	using Creator = std::function<std::unique_ptr<SortingAlgorithm>()>;
-	std::vector<Creator> _registry;
+	struct Entry {
+		Complexity complexity;
+		Creator    creator;
+	};
+	std::vector<Entry> _registry;
 
-	AlgorithmFactory() { }
+	void addAlgorithm(Creator creator);
+	void init();
+	AlgorithmFactory();
 
   public:
 	NO_COPY_MOVE(AlgorithmFactory);
 
-	static AlgorithmFactory& instance() {
-		static AlgorithmFactory factory;
-		return factory;
-	}
+	static AlgorithmFactory& instance();
 
-	void addAlgorithm(Creator creator) { _registry.push_back(std::move(creator)); }
+	void filter(Complexity complexity);
 
-	std::unique_ptr<SortingAlgorithm> create(std::size_t index) {
-		if (index >= _registry.size()) return nullptr;
-		return _registry[index]();
-	}
+	std::unique_ptr<SortingAlgorithm> shuffler();
+
+	std::unique_ptr<SortingAlgorithm> create(std::size_t index);
 };
+
+}; // namespace sorts

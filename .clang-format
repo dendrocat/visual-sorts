@@ -30,6 +30,7 @@ BraceWrapping:
   BeforeElse: true
   BeforeCatch: true
   SplitEmptyFunction: false
+Cpp11BracedListStyle: false
 
 PointerAlignment: Left
 ReferenceAlignment: Left

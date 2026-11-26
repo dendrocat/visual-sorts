@@ -3,14 +3,13 @@
 #include <memory>
 #include <thread>
 
-#include <model/SyncingModel.hpp>
+#include <Complexity.hpp>
 
-#include <sorts/Shuffler.hpp>
+#include <model/SyncingModel.hpp>
 
 class SortingManager final {
   private:
-	std::unique_ptr<Shuffler>     _shuffler;
-	std::shared_ptr<SyncingModel> _model;
+	SyncingModel&   _model;
 
 	std::unique_ptr<std::jthread> _thread;
 
@@ -22,7 +21,7 @@ class SortingManager final {
   public:
 	NO_COPY_MOVE(SortingManager);
 
-	SortingManager(std::shared_ptr<SyncingModel> model);
+	SortingManager(SyncingModel& model, const sorts::Complexity quadratic);
 
 	const std::string algorithmName();
 

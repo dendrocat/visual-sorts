@@ -3,15 +3,14 @@
 #include <chrono>
 #include <functional>
 #include <iostream>
-#include <utility>
 
 #include <SortCanceledException.hpp>
 
 #include <sorts/AlgorithmFactory.hpp>
 
-SortingManager::SortingManager(std::shared_ptr<SyncingModel> model)
-	: _model(std::move(model)) {
-	_shuffler = std::make_unique<Shuffler>();
+SortingManager::SortingManager(SyncingModel& model, const sorts::Complexity complexity)
+	: _model(model) {
+	sorts::AlgorithmFactory::instance().filter(complexity);
 }
 
 const std::string SortingManager::algorithmName() { return _algorithmName; }
@@ -28,7 +27,7 @@ void SortingManager::stop() {
 }
 
 void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
-	_model->setStopToken(stoken);
+	_model.setStopToken(stoken);
 	try {
 		executeSorts();
 	}
@@ -50,19 +49,21 @@ void SortingManager::tryExecuteSorts(std::stop_token stoken) noexcept {
 
 void SortingManager::executeSorts() {
 	std::size_t idx = 0;
-	while (auto algo = AlgorithmFactory::instance().create(idx++)) {
-		_model->clearMarkers();
-		_model->resetMeasures();
 
-		_algorithmName = _shuffler->name();
-		_shuffler->sort(_model);
+	auto shuffler = sorts::AlgorithmFactory::instance().shuffler();
+	while (auto algo = sorts::AlgorithmFactory::instance().create(idx++)) {
+		_model.clearMarkers();
+		_model.resetMeasures();
+
+		_algorithmName = shuffler->info().name;
+		shuffler->sort(_model);
 
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 
-		_model->clearMarkers();
-		_model->resetMeasures();
+		_model.clearMarkers();
+		_model.resetMeasures();
 
-		_algorithmName = algo->name();
+		_algorithmName = algo->info().name;
 		algo->sort(_model);
 
 		std::this_thread::sleep_for(std::chrono::seconds(2));

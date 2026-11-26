@@ -1,20 +1,19 @@
-#include "model/SyncingModel.hpp"
-#include "sorts/QuickSortDualPivot.hpp"
-#include "sorts/Shuffler.hpp"
-
 #include <atomic>
 #include <exception>
 #include <functional>
 #include <iostream>
-#include <memory>
 #include <thread>
+
+#include "model/SyncingModel.hpp"
+#include "sorts/AlgorithmFactory.hpp"
+#include "sorts/SortingAlgorithm.hpp"
 
 namespace test
 {
-using Sorter = QuickSortDualPivot;
+using Algo = sorts::SortingAlgorithm;
 
 void driveWithoutVisuals(SyncingModel& model, const std::function<void()>& action) {
-	std::atomic<bool>  done{false};
+	std::atomic<bool>  done{ false };
 	std::exception_ptr error;
 
 	std::jthread worker([&] {
@@ -42,46 +41,40 @@ bool isSorted(const VectorModel& model) {
 	return true;
 }
 
-bool runCase(std::size_t size, const std::string_view& desc) {
-	auto model = std::make_shared<SyncingModel>(size, 1);
+bool runCase(Algo& sorter, std::size_t size, const std::string_view& desc) {
+	SyncingModel model{ size, 1 };
 
-	Shuffler s;
-	Sorter   sorter;
+	auto s = sorts::AlgorithmFactory::instance().shuffler();
 
-	driveWithoutVisuals(*model, [&] {
-		s.sort(model);
+	driveWithoutVisuals(model, [&] {
+		s->sort(model);
 		sorter.sort(model);
 	});
 
-	if (isSorted(model->container())) {
+	if (isSorted(model.container())) {
 		std::cout << "PASSED: " << desc << "\n";
 		return true;
 	}
 
 	std::cerr << "FAILED: " << desc << ", size = " << size << "\n  got: ";
-	for (std::size_t i = 0; i < model->size(); ++i) std::cerr << model->get(i) << ' ';
+	for (std::size_t i = 0; i < model.size(); ++i) std::cerr << model.get(i) << ' ';
 	std::cerr << '\n';
 	return false;
 }
 
-} // namespace test
-
-int main() {
+int testOne(Algo& sorter) {
 	int failures = 0;
 
-	for (const auto size : {2, 4, 5, 6, 10, 512, 1000}) {
+	auto name = sorter.info().name;
+	std::cout << name << " testing...\n";
+	for (const auto size : { 2, 4, 5, 6, 10, 512, 1000 }) {
 		std::string desc = std::to_string(size) + " elements";
-		if (!test::runCase(size, desc)) {
+		if (!test::runCase(sorter, size, desc)) {
 			++failures;
 			break;
 		}
 	}
 
-	std::string name;
-	{
-		test::Sorter s;
-		name = s.name();
-	}
 	if (failures == 0) {
 		std::cout << name << ": All tests passed\n";
 		return 0;
@@ -89,4 +82,16 @@ int main() {
 
 	std::cerr << name << ": " << failures << " test(s) failed\n";
 	return 1;
+}
+
+} // namespace test
+
+int main() {
+	std::size_t idx = 0, passed = 0, failed = 0;
+	while (auto sorter = sorts::AlgorithmFactory::instance().create(idx++)) {
+		int res = test::testOne(*sorter);
+		passed += 1 - res;
+		failed += res;
+	}
+	std::cout << passed << " passed, " << failed << " failed\n";
 }

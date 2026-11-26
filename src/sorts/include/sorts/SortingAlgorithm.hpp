@@ -4,7 +4,18 @@
 
 #include <macroses.hpp>
 
+#include <Complexity.hpp>
+
 #include <model/SyncingModel.hpp>
+
+namespace sorts
+{
+
+struct AlgorithmInfo {
+	std::string_view name;
+
+	Complexity complexity;
+};
 
 class SortingAlgorithm {
   public:
@@ -12,7 +23,9 @@ class SortingAlgorithm {
 	NO_COPY_MOVE(SortingAlgorithm);
 	virtual ~SortingAlgorithm() = default;
 
-	virtual const std::string_view name() = 0;
+	[[nodiscard]] virtual const AlgorithmInfo& info() const noexcept = 0;
 
-	virtual void sort(std::shared_ptr<SyncingModel> model) = 0;
+	virtual void sort(SyncingModel& model) const = 0;
 };
+
+}; // namespace sorts
